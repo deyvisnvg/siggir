@@ -1,0 +1,36 @@
+{
+  "name": "siggir-back",
+  "version": "1.0.0",
+  "description": "Sistema de información gerencial para la gestión integral de riesgos de Electro Ucayali S.A.",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "nodemon -r esm src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deyvisnvg/siggir-back.git"
+  },
+  "author": "Deyvisnvg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deyvisnvg/siggir-back/issues"
+  },
+  "homepage": "https://github.com/deyvisnvg/siggir-back#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "esm": "^3.2.25",
+    "express": "^4.20.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.4",
+    "nodemon": "^3.1.4",
+    "standard": "^17.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
+}
