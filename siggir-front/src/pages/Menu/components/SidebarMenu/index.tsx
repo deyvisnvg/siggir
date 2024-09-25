@@ -5,19 +5,17 @@ import {
     Barcode,
     CaretDown,
     ChartPie,
-    CheckSquare,
-    Checks,
-    HourglassLow,
     HouseLine,
-    MagnifyingGlass,
-    PencilLine,
     PresentationChart,
-    UserCircle,
+    Users,
+    Gear,
+    SignOut,
 } from 'phosphor-react'
 
 import {
     Avatar,
     AvatarImage,
+    Divider,
     Sidebar,
     SidebarBody,
     SidebarCollapse,
@@ -29,24 +27,30 @@ import {
 } from 'keep-react'
 
 import { IconGridDots, IconBuildingWarehouse } from '@tabler/icons-react';
+import { DropdownComponent, TooltipComponent } from '@/components';
+import { RIESGOS } from '@/core/riesgos';
 
 export default function SidebardMenu() {
     return (
-        <Sidebar className='min-h-max max-w-max'>
+        <Sidebar className='h-max max-w-max'>
             <SidebarBody className="space-y-4">
-                <Link to="/">
-                    <span className="flex p-2 items-center justify-between rounded-md bg-metal-900 text-heading-6 font-semibold text-white dark:bg-metal-800">
-                        <div className='flex gap-2 items-center'>
-                            <IconBuildingWarehouse className='size-7' />
-                            <p>SIGGIR</p>
-                        </div>
-                        <div>
-                            <Link to="/">
-                                <IconGridDots className='size-8' />
-                            </Link>
-                        </div>
-                    </span>
-                </Link>
+                <span className="flex items-center justify-between gap-4 p-2 rounded-md bg-metal-900 text-heading-6 font-semibold text-white">
+                    <div className='flex gap-2 items-center'>
+                        <IconBuildingWarehouse className='size-7' />
+                        <p>SIGGIR</p>
+                    </div>
+                    <div className="cursor-pointer z-10">
+                        <DropdownComponent
+                            RiesgosData={RIESGOS}
+                        >
+                            <div>
+                                <TooltipComponent>
+                                    <IconGridDots />
+                                </TooltipComponent>
+                            </div>
+                        </DropdownComponent>
+                    </div>
+                </span>
 
                 <SidebarList className="space-y-0.5">
                     <SidebarItem className=''>
@@ -73,7 +77,7 @@ export default function SidebardMenu() {
                         <SidebarDropdown>
                             <SidebarCollapse>
                                 <div className="flex items-center gap-3">
-                                    <UserCircle size={20} />
+                                    <Gear size={20} />
                                     Mantenimiento
                                 </div>
                                 <span className="group-open:-rotate-180">
@@ -83,7 +87,7 @@ export default function SidebardMenu() {
 
                             <SidebarDropdownList>
                                 <SidebarItem>
-                                    <PencilLine size={20} />
+                                    <Users size={20} />
                                     Usuario
                                 </SidebarItem>
                                 <SidebarItem>
@@ -122,17 +126,22 @@ export default function SidebardMenu() {
                         <ChartPie size={20} />
                         Reportes
                     </SidebarItem>
+                    <Divider />
+                    <SidebarItem>
+                        <SignOut size={20} />
+                        Cerrar Sesión
+                    </SidebarItem>
                 </SidebarList>
             </SidebarBody>
 
             <SidebarFooter>
                 <div className="flex items-center gap-2">
                     <Avatar>
-                        <AvatarImage src={`https://unavatar.io/deyvisnvg`} alt="avatar" />
+                        <AvatarImage src={`https://unavatar.io/s4vitar`} alt="avatar" />
                     </Avatar>
                     <div>
-                        <p className="text-body-4 font-medium text-metal-400">Deyvis Valdez</p>
-                        <p className="text-body-4 font-normal text-metal-300">devisnvg@gmail.com</p>
+                        <p className="text-body-4 font-medium text-metal-400">S4vitar Valdez</p>
+                        <p className="text-body-4 font-normal text-metal-300">deyvisnvg@gmail.com</p>
                     </div>
                 </div>
             </SidebarFooter>
