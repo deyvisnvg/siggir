@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Login, Menu } from "@/pages";
-import { MainLayout } from "@/layout";
+import { Home, Login } from "@/pages";
+import { MainLayout, MenuLayout } from "@/layout";
 
 export default function Router() {
     return (
@@ -8,7 +8,9 @@ export default function Router() {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Login />} />
-                    <Route path="/menu" element={<Menu />} />
+                    <Route element={<MenuLayout />}>
+                        <Route path="/home" element={<Home />} />
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>

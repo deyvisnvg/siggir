@@ -33,7 +33,7 @@ export default function Login() {
             }
             if (email == "admin@gmail.com" && password == "123") {
                 toast.success("Inicio de sesion satisfactorio")
-                navigate('/menu');
+                navigate('/home');
             }
         },
     });
