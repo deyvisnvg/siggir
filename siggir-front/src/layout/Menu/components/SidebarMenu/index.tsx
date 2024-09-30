@@ -11,6 +11,7 @@ import {
     Gear,
     SignOut,
     SuitcaseSimple,
+    BoundingBox
 } from 'phosphor-react'
 
 import {
@@ -102,10 +103,12 @@ export default function SidebardMenu() {
                                         Cargo
                                     </SidebarItem>
                                 </Link>
-                                <SidebarItem>
-                                    <Barcode size={20} />
-                                    Area
-                                </SidebarItem>
+                                <Link to="/mantenedorArea">
+                                    <SidebarItem>
+                                        <BoundingBox size={20} />
+                                        Area
+                                    </SidebarItem>
+                                </Link>
                                 <SidebarItem>
                                     <Barcode size={20} />
                                     Gerencia
