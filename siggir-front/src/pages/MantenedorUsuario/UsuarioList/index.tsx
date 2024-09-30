@@ -41,7 +41,7 @@ export function UsuarioList() {
                         <div className="flex justify-between gap-5 w-full ">
                             <Button variant="outline" className="flex gap-1.5">
                                 <Plus className="size-4 fill-metal-900 dark:fill-white" />
-                                Add Product
+                                Registrar
                             </Button>
                             <SearchBar
                                 placeholder="Buscar..."
