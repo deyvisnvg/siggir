@@ -31,14 +31,14 @@ import {
 
 import { IconGridDots } from '@tabler/icons-react';
 import { DropdownComponent, TooltipComponent } from '@/components';
-import { RIESGOS } from '@/core/riesgos';
+import { RIESGOS } from '@/core/Riesgos';
 
 export default function SidebarIcon() {
     return (
         <Sidebar className='h-max max-w-max'>
             <SidebarBody className="space-y-4">
                 <span className="flex p-2 items-center justify-center rounded-md bg-metal-900 text-heading-6 font-semibold text-white">
-                    <div className="cursor-pointer z-10">
+                    <div className="cursor-pointer z-20">
                         <DropdownComponent
                             RiesgosData={RIESGOS}
                         >
@@ -51,11 +51,13 @@ export default function SidebarIcon() {
                     </div>
                 </span>
 
-                <SidebarList className="space-y-0.5 hidden max-lg:inline-block">
+                <SidebarList className="space-y-0.5 hidden max-lg:inline-block relative z-10">
                     <SidebarItem>
                         <Tooltip placement="right" contentOffset={30}>
                             <TooltipAction asChild>
-                                <HouseLine size={20} />
+                                <Link to="/home">
+                                    <HouseLine size={20} />
+                                </Link>
                             </TooltipAction>
                             <TooltipContent className="rounded-none text-body-5 font-normal text-white ">Home</TooltipContent>
                         </Tooltip>
@@ -114,7 +116,9 @@ export default function SidebarIcon() {
                                 <SidebarItem >
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
-                                            <Users size={20} />
+                                            <Link to="/mantenedorUsuario">
+                                                <Users size={20} />
+                                            </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Usuario</TooltipContent>
                                     </Tooltip>
@@ -193,7 +197,7 @@ export default function SidebarIcon() {
                             <TooltipAction asChild>
                                 <SignOut size={20} />
                             </TooltipAction>
-                            <TooltipContent className="rounded-none text-body-5 font-normal text-white">Log Out</TooltipContent>
+                            <TooltipContent className="rounded-none text-body-5 font-normal text-white">Cerrar Sesión</TooltipContent>
                         </Tooltip>
                     </SidebarItem>
                 </SidebarList>

@@ -28,7 +28,7 @@ import {
 
 import { IconGridDots, IconBuildingWarehouse } from '@tabler/icons-react';
 import { DropdownComponent, TooltipComponent } from '@/components';
-import { RIESGOS } from '@/core/riesgos';
+import { RIESGOS } from '@/core/Riesgos';
 
 export default function SidebardMenu() {
     return (
@@ -53,9 +53,12 @@ export default function SidebardMenu() {
                 </span>
 
                 <SidebarList className="space-y-0.5">
-                    <SidebarItem className=''>
-                        <HouseLine size={20} />Home
-                    </SidebarItem>
+                    <Link to="/home">
+                        <SidebarItem className=''>
+                            <HouseLine size={20} />
+                            Home
+                        </SidebarItem>
+                    </Link>
                     <SidebarItem className=''>
                         <PresentationChart size={20} />
                         Procesos
@@ -86,10 +89,12 @@ export default function SidebardMenu() {
                             </SidebarCollapse>
 
                             <SidebarDropdownList>
-                                <SidebarItem>
-                                    <Users size={20} />
-                                    Usuario
-                                </SidebarItem>
+                                <Link to="/mantenedorUsuario">
+                                    <SidebarItem>
+                                        <Users size={20} />
+                                        Usuario
+                                    </SidebarItem>
+                                </Link>
                                 <SidebarItem>
                                     <Barcode size={20} />
                                     Cargo
