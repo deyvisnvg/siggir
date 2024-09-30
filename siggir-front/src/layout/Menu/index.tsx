@@ -13,8 +13,10 @@ export default function Menu() {
                     <SidebarIcon />
                 </div>
             </div>
-            <main className="flex justify-center items-center w-full">
-                <Outlet />
+            <main className="flex justify-center w-full p-5">
+                <div className="w-full p-4 bg-white">
+                    <Outlet />
+                </div>
             </main>
         </div>
     )
