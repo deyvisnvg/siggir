@@ -10,6 +10,7 @@ import {
     Users,
     Gear,
     SignOut,
+    SuitcaseSimple,
 } from 'phosphor-react'
 
 import {
@@ -95,10 +96,12 @@ export default function SidebardMenu() {
                                         Usuario
                                     </SidebarItem>
                                 </Link>
-                                <SidebarItem>
-                                    <Barcode size={20} />
-                                    Cargo
-                                </SidebarItem>
+                                <Link to="/mantenedorCargo">
+                                    <SidebarItem>
+                                        <SuitcaseSimple size={20} />
+                                        Cargo
+                                    </SidebarItem>
+                                </Link>
                                 <SidebarItem>
                                     <Barcode size={20} />
                                     Area

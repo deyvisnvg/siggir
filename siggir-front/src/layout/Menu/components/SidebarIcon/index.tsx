@@ -10,6 +10,7 @@ import {
     Gear,
     Users,
     SignOut,
+    SuitcaseSimple,
 } from 'phosphor-react'
 
 import {
@@ -126,7 +127,9 @@ export default function SidebarIcon() {
                                 <SidebarItem >
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
-                                            <Barcode size={20} />
+                                            <Link to="/mantenedorCargo">
+                                                <SuitcaseSimple size={20} />
+                                            </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Cargo</TooltipContent>
                                     </Tooltip>
