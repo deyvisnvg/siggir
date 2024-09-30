@@ -11,6 +11,7 @@ import {
     Users,
     SignOut,
     SuitcaseSimple,
+    BoundingBox,
 } from 'phosphor-react'
 
 import {
@@ -138,7 +139,7 @@ export default function SidebarIcon() {
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
                                             <Link to="/mantenedorArea">
-                                                <Barcode size={20} />
+                                                <BoundingBox size={20} />
                                             </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Area</TooltipContent>
