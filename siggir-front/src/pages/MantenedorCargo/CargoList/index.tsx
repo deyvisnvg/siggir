@@ -69,7 +69,7 @@ export function CargoList() {
                                     positionDropdown='top'
                                     simpleTooltip
                                 >
-                                    <DropdownItem className='focus:outline-none'>Visualizar</DropdownItem>
+                                    <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
                                     <DropdownItem>Editar</DropdownItem>
                                 </DropdownComponent>
                             </TableCell>
