@@ -3,11 +3,7 @@
 import { Plus } from 'phosphor-react'
 import {
     Button,
-    Dropdown,
-    DropdownAction,
-    DropdownContent,
     DropdownItem,
-    DropdownList,
     Table,
     TableBody,
     TableCaption,
@@ -17,7 +13,7 @@ import {
     TableRow,
 } from 'keep-react';
 import { EllipsisHorizontalCircleIcon } from '@heroicons/react/24/outline';
-import { Pagination, SearchBar } from '@/components';
+import { DropdownComponent, Pagination, SearchBar } from '@/components';
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
 
@@ -66,26 +62,16 @@ export function CargoList() {
                         <TableRow key={item.id}>
                             <TableCell>{item.cargo}</TableCell>
                             <TableCell className='flex justify-around'>
-                                <Dropdown placement='top'>
-                                    <DropdownAction asChild>
-                                        <button>
-                                            <div className='
-                                            hint--left
-                                            hint--no-arrow 
-                                            hint--rounded'
-                                                aria-label='Más opciones'
-                                            >
-                                                <EllipsisHorizontalCircleIcon className="size-6 hover:text-green-700" />
-                                            </div>
-                                        </button>
-                                    </DropdownAction>
-                                    <DropdownContent className="max-w-max border border-metal-100 p-3 shadow-2xl">
-                                        <DropdownList>
-                                            <DropdownItem>Visualizar</DropdownItem>
-                                            <DropdownItem>Editar</DropdownItem>
-                                        </DropdownList>
-                                    </DropdownContent>
-                                </Dropdown>
+                                <DropdownComponent
+                                    iconButton={EllipsisHorizontalCircleIcon}
+                                    textTooltip="Más Opciones"
+                                    positionTooltip="left"
+                                    positionDropdown='top'
+                                    simpleTooltip
+                                >
+                                    <DropdownItem className='focus:outline-none'>Visualizar</DropdownItem>
+                                    <DropdownItem>Editar</DropdownItem>
+                                </DropdownComponent>
                             </TableCell>
                         </TableRow>
                     ))}
