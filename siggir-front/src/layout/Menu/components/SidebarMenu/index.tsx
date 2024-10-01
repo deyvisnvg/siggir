@@ -29,8 +29,8 @@ import {
 } from 'keep-react'
 
 import { IconGridDots, IconBuildingWarehouse } from '@tabler/icons-react';
-import { DropdownComponent, TooltipComponent } from '@/components';
-import { RIESGOS } from '@/core/Riesgos';
+import { DropdownComponent } from '@/components';
+import DropdownList from '../DropdownList';
 
 export default function SidebardMenu() {
     return (
@@ -41,15 +41,13 @@ export default function SidebardMenu() {
                         <IconBuildingWarehouse className='size-7' />
                         <p>SIGGIR</p>
                     </div>
-                    <div className="cursor-pointer z-10">
+                    <div className="cursor-pointer z-20">
                         <DropdownComponent
-                            RiesgosData={RIESGOS}
+                            iconButton={IconGridDots}
+                            textTooltip="Despliegue Opciones"
+                            positionTooltip='right'
                         >
-                            <div>
-                                <TooltipComponent>
-                                    <IconGridDots />
-                                </TooltipComponent>
-                            </div>
+                            <DropdownList />
                         </DropdownComponent>
                     </div>
                 </span>
