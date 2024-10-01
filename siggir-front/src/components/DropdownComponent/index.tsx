@@ -24,20 +24,20 @@ const DropdownComponent = ({
     positionDropdown,
     simpleTooltip
 }: Props) => {
-    return (
+    return (    
         <Dropdown placement={positionDropdown}>
             {
                 simpleTooltip ?
                     <DropdownAction asChild>
                         {/* <button> */}
-                            <span className={
-                                `hint--${positionTooltip}
+                        <span className={
+                            `hint--${positionTooltip}
                                 hint--no-arrow 
                                 hint--rounded hover:text-green-700 size-6 cursor-pointer focus:outline-none`}
-                                aria-label={textTooltip}
-                            >
-                                <IconButton />
-                            </span>
+                            aria-label={textTooltip}
+                        >
+                            <IconButton />
+                        </span>
                         {/* </button> */}
                     </DropdownAction>
                     :
@@ -50,11 +50,14 @@ const DropdownComponent = ({
                         </DropdownAction>
                     </TooltipComponent>
             }
-            <DropdownContent className="max-w-max border border-metal-100 p-5 shadow-2xl">
-                <DropdownList>
-                    {children}
-                </DropdownList>
-            </DropdownContent>
+            <div className='absolute z-20'>
+                <DropdownContent className="max-w-max border border-metal-100 p-4 shadow-2xl">
+                    <DropdownList>
+                        {children}
+                    </DropdownList>
+
+                </DropdownContent>
+            </div>
         </Dropdown>
     )
 }
