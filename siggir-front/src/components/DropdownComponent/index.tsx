@@ -1,67 +1,58 @@
 import {
-    Avatar,
     Dropdown,
     DropdownAction,
     DropdownContent,
-    DropdownItem,
     DropdownList,
 } from 'keep-react'
-
-import { Riesgos } from "@/types/Riesgos";
-import { ReactNode } from 'react';
-import { IconUserFilled } from '@tabler/icons-react';
+import { FC, ReactNode } from 'react';
+import TooltipComponent from '../TooltipComponent';
 
 interface Props {
-    RiesgosData: Riesgos[];
     children: ReactNode;
+    iconButton: FC;
+    textTooltip: string;
+    positionTooltip?: string;
+    positionDropdown?: any;
+    simpleTooltip?: boolean;
 }
 
-interface Color {
-    [key: string]: string;
-}
-
-const DropdownComponent = ({ RiesgosData, children }: Props) => {
-    const colores: Color = {
-        red: "text-red-600",
-        green: "text-green-600",
-        orange: "text-orange-600",
-        cyan: "text-cyan-600",
-        yellow: "text-yellow-600"
-    };
-
+const DropdownComponent = ({
+    children,
+    iconButton: IconButton,
+    textTooltip,
+    positionTooltip,
+    positionDropdown,
+    simpleTooltip
+}: Props) => {
     return (
-        <Dropdown>
-            <DropdownAction asChild>
-                {children}
-            </DropdownAction>
-            <DropdownContent className='shadow-2xl'>
-                <div className='cursor-default'>
-                    <p className='text-black text-body-4 pb-2'>Gestión de Riesgos</p>
-                </div>
+        <Dropdown placement={positionDropdown}>
+            {
+                simpleTooltip ?
+                    <DropdownAction asChild>
+                        {/* <button> */}
+                            <span className={
+                                `hint--${positionTooltip}
+                                hint--no-arrow 
+                                hint--rounded hover:text-green-700 size-6 cursor-pointer focus:outline-none`}
+                                aria-label={textTooltip}
+                            >
+                                <IconButton />
+                            </span>
+                        {/* </button> */}
+                    </DropdownAction>
+                    :
+                    <TooltipComponent
+                        textContent={textTooltip}
+                        positionTooltip={positionTooltip}
+                    >
+                        <DropdownAction asChild>
+                            <IconButton />
+                        </DropdownAction>
+                    </TooltipComponent>
+            }
+            <DropdownContent className="max-w-max border border-metal-100 p-5 shadow-2xl">
                 <DropdownList>
-                    {RiesgosData.map(({ id, name, abreviatura, color }) => (
-                        <DropdownItem key={id} className="text-xs focus:outline-none">
-                            <div>
-                                <Avatar className='size-11'>
-                                    <span className={`font-extrabold ${colores[color]}`}>{abreviatura}</span>
-                                </Avatar>
-                            </div>
-                            <div className=''>
-                                <p className="font-semibold">{name}</p>
-                            </div>
-                        </DropdownItem>
-                    ))}
-                </DropdownList>
-                <DropdownList>
-                    <div className='cursor-default'>
-                        <p className='text-black text-body-4 pb-2'>Usuario</p>
-                    </div>
-                    <DropdownItem>
-                        <div className='flex gap-3'>
-                            <IconUserFilled />
-                            <p className=''>Perfil</p>
-                        </div>
-                    </DropdownItem>
+                    {children}
                 </DropdownList>
             </DropdownContent>
         </Dropdown>
