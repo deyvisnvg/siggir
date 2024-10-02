@@ -13,7 +13,7 @@ import {
     TableRow,
 } from 'keep-react';
 import { EllipsisHorizontalCircleIcon } from '@heroicons/react/24/outline';
-import { DropdownComponent, Pagination, SearchBar } from '@/components';
+import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchBar } from '@/components';
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
 
@@ -32,13 +32,24 @@ export function UsuarioList() {
                 <TableCaption>
                     <div className="flex flex-col items-center gap-5">
                         <div className="">
-                            <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento de Usuarios</h2>
+                            <h2 className="text-heading-6 font-semibold text-metal-900">Mantenimiento de Usuarios</h2>
                         </div>
-                        <div className="flex justify-between gap-5 w-full ">
-                            <Button variant="outline" className="flex gap-1.5">
-                                <Plus className="size-4 fill-metal-900 dark:fill-white" />
-                                Registrar
-                            </Button>
+                        <div className="flex justify-between gap-5 w-full">
+                            <ModalComponent
+                                buttonModal={
+                                    <div>
+                                        <ButtonComponent
+                                            iconButton={Plus}
+                                            size="sm"
+                                            text="Registrar"
+                                            color="success"
+                                        />
+                                    </div>
+                                }
+                                titleModal="Registrar Usuario"
+                            >
+                                Información del Formulario
+                            </ModalComponent>
                             <SearchBar
                                 placeholder="Buscar..."
                                 value={searchTerm}
@@ -71,11 +82,17 @@ export function UsuarioList() {
                             <TableCell>{item.estado}</TableCell>
                             <TableCell className='flex justify-around'>
                                 <DropdownComponent
-                                    iconButton={EllipsisHorizontalCircleIcon}
-                                    textTooltip="Más Opciones"
-                                    positionTooltip="left"
+                                    iconButtonDropdown={
+                                        <span className={
+                                            `hint--left
+                                            hint--no-arrow 
+                                            hint--rounded hover:text-green-700 size-6 cursor-pointer`}
+                                            aria-label="Más Opciones"
+                                        >
+                                            <EllipsisHorizontalCircleIcon />
+                                        </span>
+                                    }
                                     positionDropdown='top'
-                                    simpleTooltip
                                 >
                                     <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
                                     <DropdownItem>Editar</DropdownItem>
@@ -84,7 +101,7 @@ export function UsuarioList() {
                         </TableRow>
                     ))}
                 </TableBody>
-            </Table>
+            </Table >
             <Pagination
                 pageCount={pageCount}
                 onPageChange={handlePageChange}
