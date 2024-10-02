@@ -4,58 +4,39 @@ import {
     DropdownContent,
     DropdownList,
 } from 'keep-react'
-import { FC, ReactNode } from 'react';
-import TooltipComponent from '../TooltipComponent';
+import { ReactNode } from 'react';
+import { Size } from '@/types/core';
 
 interface Props {
     children: ReactNode;
-    iconButton: FC;
-    textTooltip: string;
-    positionTooltip?: string;
+    iconButtonDropdown: ReactNode;
     positionDropdown?: any;
-    simpleTooltip?: boolean;
+    size?: Size;
 }
 
 const DropdownComponent = ({
     children,
-    iconButton: IconButton,
-    textTooltip,
-    positionTooltip,
+    iconButtonDropdown,
     positionDropdown,
-    simpleTooltip
+    size = "small",
 }: Props) => {
-    return (    
+
+    const sizes = {
+        small: "p-2.5",
+        medium: "p-4",
+        large: "p-5",
+    };
+
+    return (
         <Dropdown placement={positionDropdown}>
-            {
-                simpleTooltip ?
-                    <DropdownAction asChild>
-                        {/* <button> */}
-                        <span className={
-                            `hint--${positionTooltip}
-                                hint--no-arrow 
-                                hint--rounded hover:text-green-700 size-6 cursor-pointer focus:outline-none`}
-                            aria-label={textTooltip}
-                        >
-                            <IconButton />
-                        </span>
-                        {/* </button> */}
-                    </DropdownAction>
-                    :
-                    <TooltipComponent
-                        textContent={textTooltip}
-                        positionTooltip={positionTooltip}
-                    >
-                        <DropdownAction asChild>
-                            <IconButton />
-                        </DropdownAction>
-                    </TooltipComponent>
-            }
+            <DropdownAction asChild>
+                {iconButtonDropdown}
+            </DropdownAction>
             <div className='absolute z-20'>
-                <DropdownContent className="max-w-max border border-metal-100 p-4 shadow-2xl">
+                <DropdownContent className={`max-w-max shadow-2xl ${sizes[size]}`}>
                     <DropdownList>
                         {children}
                     </DropdownList>
-
                 </DropdownContent>
             </div>
         </Dropdown>
