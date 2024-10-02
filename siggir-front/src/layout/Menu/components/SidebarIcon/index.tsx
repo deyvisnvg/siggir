@@ -32,7 +32,7 @@ import {
 } from 'keep-react'
 
 import { IconGridDots } from '@tabler/icons-react';
-import { DropdownComponent } from '@/components';
+import { DropdownComponent, TooltipComponent } from '@/components';
 import DropdownList from '../DropdownList';
 
 export default function SidebarIcon() {
@@ -42,10 +42,17 @@ export default function SidebarIcon() {
                 <span className="flex p-2 items-center justify-center rounded-md bg-metal-900 text-heading-6 font-semibold text-white">
                     <div className="cursor-pointer z-20">
                         <DropdownComponent
-                            iconButton={IconGridDots}
-                            textTooltip="Despliegue Opciones"
-                            positionTooltip='right'
-                        >
+                            iconButtonDropdown={
+                                <div>
+                                    <TooltipComponent
+                                        textContent="Despliegue Opciones"
+                                        positionTooltip="right"
+                                    >
+                                        <IconGridDots />
+                                    </TooltipComponent>
+                                </div>
+                            }
+                            size='medium'>
                             <DropdownList />
                         </DropdownComponent>
                     </div>
