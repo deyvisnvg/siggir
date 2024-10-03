@@ -16,6 +16,7 @@ import { EllipsisHorizontalCircleIcon } from '@heroicons/react/24/outline';
 import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchBar } from '@/components';
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
+import UsuarioAdd from '../UsuarioAdd';
 
 export function UsuarioList() {
     const context = useContext(MyContext);
@@ -48,7 +49,7 @@ export function UsuarioList() {
                                 }
                                 titleModal="Registrar Usuario"
                             >
-                                Información del Formulario
+                                <UsuarioAdd></UsuarioAdd>
                             </ModalComponent>
                             <SearchBar
                                 placeholder="Buscar..."
