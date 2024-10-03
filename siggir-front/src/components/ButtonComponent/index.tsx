@@ -1,9 +1,10 @@
 import { Button } from 'keep-react'
 import { FC } from 'react';
+import { ButtonVariant } from '@/types/core'
 
 interface Props {
-    handleClick?: () => void;
-    iconButton: FC;
+    type?: ButtonVariant;
+    iconButton?: FC;
     size: any;
     variant?: any;
     text: string;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 export default function ButtonComponent({
-    handleClick,
+    type = "button",
     iconButton: IconButton,
     size,
     variant,
@@ -21,13 +22,15 @@ export default function ButtonComponent({
 
     return (
         <Button
-            type="submit"
-            onClick={handleClick}
+            type={type}
             size={size}
             variant={variant}
             color={color}
         >
-            <IconButton />
+            {
+                IconButton ? <IconButton /> : ""
+            }
+
             <div className='px-1.5'>
                 {text}
             </div>
