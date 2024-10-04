@@ -35,19 +35,17 @@ export function CargoList() {
                         </div>
                         <div className="flex justify-between gap-5 w-full ">
                             <ModalComponent
-                                buttonModal={
-                                    <div>
-                                        <ButtonComponent
-                                            iconButton={Plus}
-                                            size="sm"
-                                            text="Registrar"
-                                            color="success"
-                                        />
-                                    </div>
-                                }
+                                formModal="Información del Formulario"
                                 titleModal="Registrar Cargo"
                             >
-                                Información del Formulario
+                                <div>
+                                    <ButtonComponent
+                                        iconButton={Plus}
+                                        size="sm"
+                                        text="Registrar"
+                                        color="success"
+                                    />
+                                </div>
                             </ModalComponent>
                             <SearchBar
                                 placeholder="Buscar..."

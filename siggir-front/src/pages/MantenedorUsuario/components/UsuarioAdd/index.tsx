@@ -6,7 +6,7 @@ export default function UsuarioAdd() {
             <div>
                 <div>
                     <span className="text-base font-medium text-cyan-800 px-0.5 border-b-2 border-double">Datos Persona</span>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2.5 pt-3.5">
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 pt-3.5">
                         <div className="flex flex-col">
                             <label htmlFor="dni" className="text-sm font-medium">DNI</label>
                             <input type="text"
@@ -58,7 +58,7 @@ export default function UsuarioAdd() {
                 </div>
                 <div className="pt-5">
                     <span className="text-base font-medium text-cyan-800 px-0.5 border-b-2 border-double">Datos Usuario</span>
-                    <div className="grid grid-cols-1 gap-x-10 gap-y-2.5 pt-3.5">
+                    <div className="grid grid-cols-1 gap-x-8 gap-y-2 pt-3.5">
                         <div className="flex flex-col">
                             <label htmlFor="usuario" className="text-sm font-medium">Usuario</label>
                             <input type="text"
@@ -69,10 +69,18 @@ export default function UsuarioAdd() {
                         </div>
                         <div className="flex flex-col">
                             <label htmlFor="password" className="text-sm font-medium">Contraseña</label>
-                            <input type="text"
+                            <input type="password"
                                 id="password"
                                 className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
                                 placeholder="Ingrese contraseña"
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label htmlFor="password" className="text-sm font-medium">Confirmar Contraseña</label>
+                            <input type="password"
+                                id="password"
+                                className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
+                                placeholder="Confirme contraseña"
                             />
                         </div>
                     </div>
