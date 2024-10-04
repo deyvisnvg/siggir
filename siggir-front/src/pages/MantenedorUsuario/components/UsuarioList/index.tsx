@@ -2,7 +2,6 @@
 
 import { Plus } from 'phosphor-react'
 import {
-    Button,
     DropdownItem,
     Table,
     TableBody,
@@ -17,8 +16,9 @@ import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchB
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
 import UsuarioAdd from '../UsuarioAdd';
+import UsuarioEdit from '../UsuarioEdit';
 
-export function UsuarioList() {
+export default function UsuarioList() {
     const context = useContext(MyContext);
 
     if (!context) {
@@ -37,19 +37,17 @@ export function UsuarioList() {
                         </div>
                         <div className="flex justify-between gap-5 w-full">
                             <ModalComponent
-                                buttonModal={
-                                    <div>
-                                        <ButtonComponent
-                                            iconButton={Plus}
-                                            size="sm"
-                                            text="Registrar"
-                                            color="success"
-                                        />
-                                    </div>
-                                }
+                                formModal={<UsuarioAdd />}
                                 titleModal="Registrar Usuario"
                             >
-                                <UsuarioAdd></UsuarioAdd>
+                                <div>
+                                    <ButtonComponent
+                                        iconButton={Plus}
+                                        size="sm"
+                                        text="Registrar"
+                                        color="success"
+                                    />
+                                </div>
                             </ModalComponent>
                             <SearchBar
                                 placeholder="Buscar..."
@@ -96,7 +94,12 @@ export function UsuarioList() {
                                     positionDropdown='top'
                                 >
                                     <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
-                                    <DropdownItem>Editar</DropdownItem>
+                                    <ModalComponent
+                                        formModal={<UsuarioEdit id={item.id} />}
+                                        titleModal="Editar Usuario"
+                                    >
+                                        <div><DropdownItem>Editar</DropdownItem></div>
+                                    </ModalComponent>
                                 </DropdownComponent>
                             </TableCell>
                         </TableRow>
