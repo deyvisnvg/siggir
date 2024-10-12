@@ -23,12 +23,12 @@ const ModalComponent = ({ children, formModal, titleModal }: Props) => {
             <ModalAction asChild>
                 {children}
             </ModalAction>
-            <ModalContent className="w-[29rem] lg:w-[26rem]">
+            <ModalContent className="w-auto">
                 <ModalClose className="absolute right-4 top-4" />
                 <ModalHeader className="mb-6 flex flex-col items-center justify-center space-y-3">
                     <div className="space-y-1">
-                        <ModalTitle className='text-center p-2 text-heading-6 text-gray-700'>{titleModal}</ModalTitle>
-                        <ModalDescription>
+                        <ModalTitle className='text-center p-1 text-heading-6 text-gray-700'>{titleModal}</ModalTitle>
+                        <ModalDescription className='px-1.5'>
                             {formModal}
                         </ModalDescription>
                     </div>
