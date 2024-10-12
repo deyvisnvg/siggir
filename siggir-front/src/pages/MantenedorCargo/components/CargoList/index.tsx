@@ -16,6 +16,7 @@ import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchB
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
 import CargoAdd from '../CargoAdd';
+import CargoEdit from '../CargoEdit';
 
 export default function CargoList() {
     const context = useContext(MyContext);
@@ -85,7 +86,12 @@ export default function CargoList() {
                                     positionDropdown='top'
                                 >
                                     <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
-                                    <DropdownItem>Editar</DropdownItem>
+                                    <ModalComponent
+                                        formModal={<CargoEdit />}
+                                        titleModal="Editar Cargo"
+                                    >
+                                        <div><DropdownItem>Editar</DropdownItem></div>
+                                    </ModalComponent>
                                 </DropdownComponent>
                             </TableCell>
                         </TableRow>
