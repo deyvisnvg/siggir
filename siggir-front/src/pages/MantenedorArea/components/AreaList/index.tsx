@@ -15,8 +15,10 @@ import { EllipsisHorizontalCircleIcon } from '@heroicons/react/24/outline';
 import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchBar } from '@/components';
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
+import AreaEdit from '../AreaEdit';
+import AreaAdd from '../AreaAdd';
 
-export function AreaList() {
+export default function AreaList() {
     const context = useContext(MyContext);
 
     if (!context) {
@@ -35,7 +37,7 @@ export function AreaList() {
                         </div>
                         <div className="flex justify-between gap-5 w-full ">
                             <ModalComponent
-                                formModal="Información del Formulario"
+                                formModal={<AreaAdd />}
                                 titleModal="Registrar Area"
                             >
                                 <div>
@@ -84,7 +86,12 @@ export function AreaList() {
                                     positionDropdown='top'
                                 >
                                     <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
-                                    <DropdownItem>Editar</DropdownItem>
+                                    <ModalComponent
+                                        formModal={<AreaEdit />}
+                                        titleModal="Editar Area"
+                                    >
+                                        <div><DropdownItem>Editar</DropdownItem></div>
+                                    </ModalComponent>
                                 </DropdownComponent>
                             </TableCell>
                         </TableRow>
