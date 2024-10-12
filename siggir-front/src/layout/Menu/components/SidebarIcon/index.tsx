@@ -12,6 +12,7 @@ import {
     SignOut,
     SuitcaseSimple,
     BoundingBox,
+    Bookmark
 } from 'phosphor-react'
 
 import {
@@ -153,7 +154,9 @@ export default function SidebarIcon() {
                                 <SidebarItem>
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
-                                            <Barcode size={20} />
+                                            <Link to="/mantenedorGerencia">
+                                                <Bookmark size={20} />
+                                            </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Gerencia</TooltipContent>
                                     </Tooltip>

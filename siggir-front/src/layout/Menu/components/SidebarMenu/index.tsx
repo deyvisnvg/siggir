@@ -29,6 +29,7 @@ import {
 } from 'keep-react'
 
 import { IconGridDots, IconBuildingWarehouse } from '@tabler/icons-react';
+import { BookmarkSquareIcon } from '@heroicons/react/24/outline';
 import { DropdownComponent, TooltipComponent } from '@/components';
 import DropdownList from '../DropdownList';
 
@@ -115,10 +116,12 @@ export default function SidebardMenu() {
                                         Area
                                     </SidebarItem>
                                 </Link>
-                                <SidebarItem>
-                                    <Barcode size={20} />
-                                    Gerencia
-                                </SidebarItem>
+                                <Link to="/mantenedorGerencia">
+                                    <SidebarItem>
+                                        <BookmarkSquareIcon className='size-5' />
+                                        Gerencia
+                                    </SidebarItem>
+                                </Link>
                                 <SidebarItem>
                                     <Barcode size={20} />
                                     Macroproceso

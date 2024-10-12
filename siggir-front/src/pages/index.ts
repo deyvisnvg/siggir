@@ -3,3 +3,4 @@ export {default as Home} from "./Home";
 export { default as MantenedorUsuario } from "./MantenedorUsuario";
 export { default as MantenedorCargo } from "./MantenedorCargo";
 export { default as MantenedorArea } from "./MantenedorArea";
+export { default as MantenedorGerencia } from "./MantenedorGerencia";
