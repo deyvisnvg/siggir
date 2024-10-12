@@ -78,31 +78,39 @@ export default function UsuarioEdit({ id }: Readonly<Props>) {
                             </div>
                         </div>
                         <div className="pt-5">
-                            <span className="text-base font-medium text-cyan-800 px-0.5 border-b-2 border-double">Datos Usuario</span>
+                            <div className="flex gap-3 items-center">
+                                <span className="text-base font-medium text-cyan-800 px-0.5 border-b-2 border-double">
+                                    Datos Usuario
+                                </span>
+                                <Cog6ToothIcon className="size-4 cursor-pointer hover:text-blue-700" />
+                            </div>
                             <div className="grid grid-cols-1 gap-x-8 gap-y-2 pt-3.5">
                                 <div className="flex flex-col">
                                     <label htmlFor="usuario" className="text-sm font-medium">Usuario</label>
-                                    <div className="flex items-center gap-3">
-                                        <input type="text"
-                                            id="usuario"
-                                            className="w-full border border-gray-400 rounded-md px-3 py-1.5 text-sm"
-                                            placeholder="Ingrese usuario"
-                                            readOnly
-                                        />
-                                        <Cog6ToothIcon className="size-5 cursor-pointer hover:text-blue-700" />
-                                    </div>
+                                    <input type="text"
+                                        id="usuario"
+                                        className="w-full border border-gray-400 rounded-md px-3 py-1.5 text-sm"
+                                        placeholder="Ingrese usuario"
+                                        readOnly
+                                    />
                                 </div>
                                 <div className="flex flex-col">
                                     <label htmlFor="password" className="text-sm font-medium">Contraseña</label>
-                                    <div className="flex items-center gap-3">
-                                        <input type="password"
-                                            id="password"
-                                            className="w-full border border-gray-400 rounded-md px-3 py-1.5 text-sm"
-                                            placeholder="Ingrese contraseña"
-                                            readOnly
-                                        />
-                                        <Cog6ToothIcon className="size-5 cursor-pointer hover:text-blue-700" />
-                                    </div>
+                                    <input type="password"
+                                        id="password"
+                                        className="w-full border border-gray-400 rounded-md px-3 py-1.5 text-sm"
+                                        placeholder="Ingrese contraseña"
+                                        readOnly
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <label htmlFor="password" className="text-sm font-medium">Confirmar Contraseña</label>
+                                    <input type="password"
+                                        id="password"
+                                        className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
+                                        placeholder="Confirme contraseña"
+                                        readOnly
+                                    />
                                 </div>
                             </div>
                         </div>
