@@ -29,7 +29,7 @@ import {
 } from 'keep-react'
 
 import { IconGridDots, IconBuildingWarehouse } from '@tabler/icons-react';
-import { BookmarkSquareIcon } from '@heroicons/react/24/outline';
+import { BookmarkSquareIcon, Square3Stack3DIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
 import { DropdownComponent, TooltipComponent } from '@/components';
 import DropdownList from '../DropdownList';
 
@@ -122,14 +122,24 @@ export default function SidebardMenu() {
                                         Gerencia
                                     </SidebarItem>
                                 </Link>
-                                <SidebarItem>
-                                    <Barcode size={20} />
-                                    Macroproceso
-                                </SidebarItem>
-                                <SidebarItem>
-                                    <Barcode size={20} />
-                                    Proceso
-                                </SidebarItem>
+                                <Link to="/mantenedorMacroproceso">
+                                    <SidebarItem>
+                                        <Barcode size={20} />
+                                        Macroproceso
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorProceso">
+                                    <SidebarItem>
+                                        <Square3Stack3DIcon className='size-5' />
+                                        Proceso
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorSubProceso">
+                                    <SidebarItem>
+                                        <Squares2X2Icon className='size-5' />
+                                        Sub Proceso
+                                    </SidebarItem>
+                                </Link>
                                 <SidebarItem>
                                     <Barcode size={20} />
                                     Perfil

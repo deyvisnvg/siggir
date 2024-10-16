@@ -12,7 +12,6 @@ import {
     SignOut,
     SuitcaseSimple,
     BoundingBox,
-    Bookmark
 } from 'phosphor-react'
 
 import {
@@ -33,6 +32,7 @@ import {
 } from 'keep-react'
 
 import { IconGridDots } from '@tabler/icons-react';
+import { BookmarkSquareIcon, Square3Stack3DIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
 import { DropdownComponent, TooltipComponent } from '@/components';
 import DropdownList from '../DropdownList';
 
@@ -155,7 +155,7 @@ export default function SidebarIcon() {
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
                                             <Link to="/mantenedorGerencia">
-                                                <Bookmark size={20} />
+                                                <BookmarkSquareIcon className='size-5' />
                                             </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Gerencia</TooltipContent>
@@ -164,7 +164,9 @@ export default function SidebarIcon() {
                                 <SidebarItem>
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
-                                            <Barcode size={20} />
+                                            <Link to="/mantenedorMacroproceso">
+                                                <Barcode size={20} />
+                                            </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Macroproceso</TooltipContent>
                                     </Tooltip>
@@ -172,9 +174,21 @@ export default function SidebarIcon() {
                                 <SidebarItem>
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
-                                            <Barcode size={20} />
+                                            <Link to="/mantenedorProceso">
+                                                <Square3Stack3DIcon className='size-5' />
+                                            </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Proceso</TooltipContent>
+                                    </Tooltip>
+                                </SidebarItem>
+                                <SidebarItem>
+                                    <Tooltip placement="right" contentOffset={30}>
+                                        <TooltipAction asChild>
+                                            <Link to="/mantenedorSubProceso">
+                                                <Squares2X2Icon className='size-5' />
+                                            </Link>
+                                        </TooltipAction>
+                                        <TooltipContent className="rounded-none text-body-5 font-normal text-white">Sub Proceso</TooltipContent>
                                     </Tooltip>
                                 </SidebarItem>
                                 <SidebarItem>
