@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Login, MantenedorArea, MantenedorCargo, MantenedorUsuario, MantenedorGerencia } from "@/pages";
+import { Home, Login, MantenedorArea, MantenedorCargo, MantenedorUsuario, MantenedorGerencia, MantenedorMacroproceso, MantenedorProceso, MantenedorSubProceso } from "@/pages";
 import { MainLayout, MenuLayout } from "@/layout";
 
 export default function Router() {
@@ -14,6 +14,9 @@ export default function Router() {
                         <Route path="/mantenedorCargo" element={<MantenedorCargo />} />
                         <Route path="/mantenedorArea" element={<MantenedorArea />} />
                         <Route path="/mantenedorGerencia" element={<MantenedorGerencia />} />
+                        <Route path="/mantenedorMacroproceso" element={<MantenedorMacroproceso />} />
+                        <Route path="/mantenedorProceso" element={<MantenedorProceso />} />
+                        <Route path="/mantenedorSubProceso" element={<MantenedorSubProceso />} />
                     </Route>
                 </Route>
             </Routes>
