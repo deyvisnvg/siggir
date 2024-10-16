@@ -28,21 +28,23 @@ export default function SubProcesoAdd() {
                         placeholder="Select option"
                     />
                 </div>
-                <div className="flex flex-col">
-                    <label htmlFor="macroproceso" className="text-sm font-medium">Macroproceso perteneciente</label>
-                    <input type="text"
-                        id="macroproceso"
-                        className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
-                        placeholder="Select option"
-                    />
-                </div>
-                <div className="flex flex-col">
-                    <label htmlFor="proceso" className="text-sm font-medium">Proceso perteneciente</label>
-                    <input type="text"
-                        id="proceso"
-                        className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
-                        placeholder="Select option"
-                    />
+                <div className="grid grid-cols-2 gap-x-6 gap-y-2 pt-2">
+                    <div className="flex flex-col">
+                        <label htmlFor="macroproceso" className="text-sm font-medium">Macroproceso perteneciente</label>
+                        <input type="text"
+                            id="macroproceso"
+                            className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
+                            placeholder="Select option"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="proceso" className="text-sm font-medium">Proceso perteneciente</label>
+                        <input type="text"
+                            id="proceso"
+                            className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
+                            placeholder="Select option"
+                        />
+                    </div>
                 </div>
             </div>
             <div className="text-center pt-7">
