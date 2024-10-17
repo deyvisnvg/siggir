@@ -32,7 +32,7 @@ import {
 } from 'keep-react'
 
 import { IconGridDots } from '@tabler/icons-react';
-import { BookmarkSquareIcon, Square3Stack3DIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
+import { BookmarkSquareIcon, Square3Stack3DIcon, Squares2X2Icon, Bars3Icon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { DropdownComponent, TooltipComponent } from '@/components';
 import DropdownList from '../DropdownList';
 
@@ -195,7 +195,7 @@ export default function SidebarIcon() {
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
                                             <Link to="/mantenedorPerfiles">
-                                                <Barcode size={20} />
+                                                <UserGroupIcon className='size-5'/>
                                             </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Perfiles</TooltipContent>
@@ -204,7 +204,9 @@ export default function SidebarIcon() {
                                 <SidebarItem>
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
-                                            <Barcode size={20} />
+                                            <Link to="/mantenedorMenu">
+                                                <Bars3Icon className='size-5' />
+                                            </Link>
                                         </TooltipAction>
                                         <TooltipContent className="rounded-none text-body-5 font-normal text-white">Menu</TooltipContent>
                                     </Tooltip>

@@ -29,7 +29,7 @@ import {
 } from 'keep-react'
 
 import { IconGridDots, IconBuildingWarehouse } from '@tabler/icons-react';
-import { BookmarkSquareIcon, Square3Stack3DIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
+import { BookmarkSquareIcon, Square3Stack3DIcon, Squares2X2Icon, Bars3Icon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { DropdownComponent, TooltipComponent } from '@/components';
 import DropdownList from '../DropdownList';
 
@@ -40,7 +40,7 @@ export default function SidebardMenu() {
                 <span className="flex items-center justify-between gap-4 p-2 rounded-md bg-metal-900 text-heading-6 font-semibold text-white">
                     <div className='flex gap-2 items-center'>
                         <IconBuildingWarehouse className='size-7' />
-                        <p>SIGGIR</p>
+                        <p>SIGIR</p>
                     </div>
                     <div className="cursor-pointer z-20">
                         <DropdownComponent
@@ -142,14 +142,16 @@ export default function SidebardMenu() {
                                 </Link>
                                 <Link to="/mantenedorPerfiles">
                                     <SidebarItem>
-                                        <Barcode size={20} />
+                                        <UserGroupIcon className='size-5' />
                                         Perfiles
                                     </SidebarItem>
                                 </Link>
-                                <SidebarItem>
-                                    <Barcode size={20} />
-                                    Menu
-                                </SidebarItem>
+                                <Link to="/mantenedorMenu">
+                                    <SidebarItem>
+                                        <Bars3Icon className='size-5' />
+                                        Menu
+                                    </SidebarItem>
+                                </Link>
                             </SidebarDropdownList>
                         </SidebarDropdown>
                     </SidebarItem>
