@@ -90,8 +90,8 @@ export default function MacroprocesoList() {
                                     }
                                     positionDropdown='top'
                                 >
-                                    <Link to="/mantenedorProceso" state={{ id: item.id }}>
-                                        <DropdownItem className='focus:outline-0'>Ver Procesos</DropdownItem>
+                                    <Link to="/mantenedorProceso" state={{ id: item.id }} className='focus:outline-0'>
+                                        <DropdownItem>Ver Procesos</DropdownItem>
                                     </Link>
                                     <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
                                     <ModalComponent
