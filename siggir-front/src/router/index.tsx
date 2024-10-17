@@ -10,7 +10,9 @@ import {
     MantenedorProceso,
     MantenedorSubProceso,
     MantenedorPerfiles,
-    MantenedorAsigUsuario
+    MantenedorAsigUsuario,
+    MantenedorMenu,
+    MantenedorAsigPerfiles
 } from "@/pages";
 import { MainLayout, MenuLayout } from "@/layout";
 
@@ -31,6 +33,8 @@ export default function Router() {
                         <Route path="/mantenedorSubProceso" element={<MantenedorSubProceso />} />
                         <Route path="/mantenedorPerfiles" element={<MantenedorPerfiles />} />
                         <Route path="/mantenedorAsigUsuario" element={<MantenedorAsigUsuario />} />
+                        <Route path="/mantenedorMenu" element={<MantenedorMenu />} />
+                        <Route path="/mantenedorAsigPerfiles" element={<MantenedorAsigPerfiles />} />
                     </Route>
                 </Route>
             </Routes>
