@@ -140,10 +140,12 @@ export default function SidebardMenu() {
                                         Sub Proceso
                                     </SidebarItem>
                                 </Link>
-                                <SidebarItem>
-                                    <Barcode size={20} />
-                                    Perfil
-                                </SidebarItem>
+                                <Link to="/mantenedorPerfiles">
+                                    <SidebarItem>
+                                        <Barcode size={20} />
+                                        Perfiles
+                                    </SidebarItem>
+                                </Link>
                                 <SidebarItem>
                                     <Barcode size={20} />
                                     Menu
