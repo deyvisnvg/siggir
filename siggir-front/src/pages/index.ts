@@ -7,3 +7,5 @@ export { default as MantenedorGerencia } from "./MantenedorGerencia";
 export { default as MantenedorMacroproceso } from "./MantenedorMacroproceso";
 export { default as MantenedorProceso } from "./MantenedorProceso";
 export { default as MantenedorSubProceso } from "./MantenedorSubProceso";
+export { default as MantenedorPerfiles } from "./MantenedorPerfiles";
+export { default as MantenedorAsigUsuario } from "./MantenedorAsigUsuario";

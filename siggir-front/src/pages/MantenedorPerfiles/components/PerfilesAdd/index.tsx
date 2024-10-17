@@ -1,15 +1,15 @@
 import { ButtonComponent } from "@/components";
 
-export default function GerenciaAdd() {
+export default function PerfilesAdd() {
     return (
         <form action="" className="px-2">
             <div className="flex flex-col gap-y-3 pt-3.5">
                 <div className="flex flex-col gap-y-0.5">
-                    <label htmlFor="gerencia" className="text-sm font-medium">Nombre de gerencia</label>
+                    <label htmlFor="perfil" className="text-sm font-medium">Nombre del Perfil</label>
                     <input type="text"
-                        id="gerencia"
+                        id="perfil"
                         className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
-                        placeholder="Ingrese gerencia"
+                        placeholder="Ingrese nombre perfil"
                     />
                 </div>
             </div>

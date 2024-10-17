@@ -194,9 +194,11 @@ export default function SidebarIcon() {
                                 <SidebarItem>
                                     <Tooltip placement="right" contentOffset={30}>
                                         <TooltipAction asChild>
-                                            <Barcode size={20} />
+                                            <Link to="/mantenedorPerfiles">
+                                                <Barcode size={20} />
+                                            </Link>
                                         </TooltipAction>
-                                        <TooltipContent className="rounded-none text-body-5 font-normal text-white">Perfil</TooltipContent>
+                                        <TooltipContent className="rounded-none text-body-5 font-normal text-white">Perfiles</TooltipContent>
                                     </Tooltip>
                                 </SidebarItem>
                                 <SidebarItem>

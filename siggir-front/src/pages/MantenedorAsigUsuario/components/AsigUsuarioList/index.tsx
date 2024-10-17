@@ -16,10 +16,10 @@ import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchB
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
 import { Link } from 'react-router-dom';
-import ProcesoAddMacro from '../ProcesoAddMacro';
-import ProcesoEditMacro from '../ProcesoEditMacro';
+import AsigUsuarioAdd from '../AsigUsuarioAdd';
+import AsigUsuarioEdit from '../AsigUsuarioEdit';
 
-export default function ProcesoListMacro() {
+export default function AsigUsuarioList() {
     const context = useContext(MyContext);
 
     if (!context) {
@@ -34,21 +34,21 @@ export default function ProcesoListMacro() {
                 <TableCaption>
                     <div className="flex flex-col items-center gap-5">
                         <div className="">
-                            <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento Proceso</h2>
+                            <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Asignación Usuarios</h2>
                         </div>
                         <div className='flex gap-3 w-full py-4'>
-                            <span className='font-bold'>MACROPROCESO:</span> {current[0].macroproceso}
+                            <span className='font-bold'>NOMBRE DEL PERFIL:</span> Alta dirección
                         </div>
                         <div className="flex justify-between gap-5 w-full ">
                             <ModalComponent
-                                formModal={<ProcesoAddMacro />}
-                                titleModal="Registrar Proceso"
+                                formModal={<AsigUsuarioAdd />}
+                                titleModal="Asignar Usuario"
                             >
                                 <div>
                                     <ButtonComponent
                                         iconButton={Plus}
                                         size="sm"
-                                        text="Registrar"
+                                        text="Asignar"
                                         color="success"
                                     />
                                 </div>
@@ -64,10 +64,10 @@ export default function ProcesoListMacro() {
                 <TableHeader>
                     <TableRow className='*:bg-gray-600 *:text-white'>
                         <TableHead className='rounded-s-lg'>
-                            <div className="w-auto">Código</div>
+                            <div className="w-auto">Nombre de usuario</div>
                         </TableHead>
                         <TableHead>
-                            <div className="w-auto">Nombre del Proceso</div>
+                            <div className="w-auto">Estado</div>
                         </TableHead>
                         <TableHead className='text-center rounded-e-md'>
                             <div className="w-auto">Acción</div>
@@ -77,8 +77,8 @@ export default function ProcesoListMacro() {
                 <TableBody>
                     {current.map((item: any) => (
                         <TableRow key={item.id}>
-                            <TableCell>{item.codigo}</TableCell>
-                            <TableCell>{item.proceso}</TableCell>
+                            <TableCell>{item.usuario}</TableCell>
+                            <TableCell>{item.estado}</TableCell>
                             <TableCell className='flex justify-around'>
                                 <DropdownComponent
                                     iconButtonDropdown={
@@ -93,13 +93,10 @@ export default function ProcesoListMacro() {
                                     }
                                     positionDropdown='top'
                                 >
-                                    <Link to="/mantenedorSubProceso" state={{ id_proceso: item.id, id_macroproceso: item.id_macroproceso }} className='focus:outline-0'>
-                                        <DropdownItem>Ver SubProcesos</DropdownItem>
-                                    </Link>
                                     <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
                                     <ModalComponent
-                                        formModal={<ProcesoEditMacro />}
-                                        titleModal="Editar Proceso"
+                                        formModal={<AsigUsuarioEdit />}
+                                        titleModal="Editar Asignar Usuario"
                                     >
                                         <div><DropdownItem>Editar</DropdownItem></div>
                                     </ModalComponent>
