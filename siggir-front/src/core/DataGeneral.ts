@@ -418,3 +418,43 @@ export const ASIG_USUARIOS = [
     estado: "ACTIVO",
   },
 ];
+
+export const MENU = [
+  {
+    id: 1,
+    menu: "Macroproceso",
+    url: "http://siggir/mantenimiento_macroproceso",
+    estado: "ACTIVO",
+  },
+  {
+    id: 2,
+    menu: "Proceso",
+    url: "http://siggir/mantenimiento_proceso",
+    estado: "ACTIVO",
+  },
+  {
+    id: 3,
+    menu: "Usuario",
+    url: "http://siggir/mantenimiento_usuario",
+    estado: "ACTIVO",
+  },
+  {
+    id: 4,
+    menu: "Cargo",
+    url: "http://siggir/mantenimiento_cargo",
+    estado: "ACTIVO",
+  },
+];
+
+export const ASIG_PERFILES = [
+  {
+    id: 1,
+    perfil: "Dueño del proceso",
+    estado: "ACTIVO",
+  },
+  {
+    id: 2,
+    perfil: "Responsable del proceso",
+    estado: "ACTIVO",
+  },
+];
