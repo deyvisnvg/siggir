@@ -1,6 +1,12 @@
 import { ButtonComponent } from "@/components";
 
-export default function ProcesoEditMacro() {
+interface Props {
+    /* getGerencia: () => void; */
+    idProcesoMacro: string | number;
+    /* setOpenModal: (open: boolean) => void; */
+}
+
+export default function ProcesoEditMacro({ idProcesoMacro }: Props) {
     return (
         <form action="" className="px-2">
             <div className="flex flex-col gap-y-3 pt-3.5">

@@ -1,14 +1,17 @@
 import { PaginationSearchProvider } from "@/contexts";
-import { MACROPROCESOS } from "@/core/DataGeneral";
+/* import { MACROPROCESOS } from "@/controllers/DataGeneral"; */
 import { useLocation } from "react-router-dom";
-import { SubProcesoList, SubProcesoListPro } from "./components";
+import { useEffect } from "react";
+import { SubProcesoList, SubProcesoListEmpty, SubProcesoListPro } from "./components";
+import { SubprocesoController } from "@/controllers";
 
 export default function MantenedorSubProceso() {
     const location = useLocation();
     const { id_proceso, id_macroproceso } = location.state || {};
-    let subprocesos;
+    console.log(id_proceso)
+    /* let subprocesos; */
 
-    if (id_proceso) {
+    /* if (id_proceso) {
         subprocesos = MACROPROCESOS.flatMap(data => {
             if (data.id == id_macroproceso) {
                 return data.procesos.flatMap(proceso => {
@@ -34,6 +37,25 @@ export default function MantenedorSubProceso() {
                 }))
             })
         })
+    } */
+
+    const {
+        subprocesos,
+        readSubproceso,
+    } = SubprocesoController();
+
+    useEffect(() => {
+        readSubproceso();
+    }, [])
+
+    if (subprocesos === undefined) {
+        return <div>Cargando...</div>;
+    }
+
+    if (subprocesos.length == 0) {
+        return (
+            <SubProcesoListEmpty getSubproceso={readSubproceso} />
+        )
     }
 
     return (
@@ -42,7 +64,7 @@ export default function MantenedorSubProceso() {
         >
             {
                 id_proceso ? <SubProcesoListPro />
-                    : <SubProcesoList />
+                    : <SubProcesoList getSubproceso={readSubproceso} />
             }
         </PaginationSearchProvider>
     )

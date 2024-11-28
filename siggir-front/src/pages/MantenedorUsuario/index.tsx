@@ -1,13 +1,33 @@
 import { PaginationSearchProvider } from "@/contexts";
 import UsuarioList from "./components/UsuarioList";
-import { USUARIOS } from "@/core/Usuarios";
+import { UsuarioListEmpty } from "./components";
+import { UsuarioController } from "@/controllers";
+import { useEffect } from "react";
 
 export default function MantenedorUsuario() {
+    const {
+        personas,
+        readUsuario,
+    } = UsuarioController();
+
+    useEffect(() => {
+        readUsuario();
+    }, [])
+
+    if (personas === undefined) {
+        return <div>Cargando...</div>;
+    }
+
+    if (personas.length == 0) {
+        return (
+            <UsuarioListEmpty getUsuario={readUsuario} />
+        )
+    }
     return (
         <PaginationSearchProvider
-            datas={USUARIOS}
+            datas={personas}
         >
-            <UsuarioList />
+            <UsuarioList getUsuario={readUsuario} />
         </PaginationSearchProvider>
     )
 }

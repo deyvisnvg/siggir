@@ -10,9 +10,14 @@ import {
     MantenedorProceso,
     MantenedorSubProceso,
     MantenedorPerfiles,
-    MantenedorAsigUsuario,
     MantenedorMenu,
-    MantenedorAsigPerfiles
+    MantenedorAsigPerfiles,
+    MatrizCambioSignificativo,
+    PruebaComponent,
+    MantenedorPermisosMenu,
+    MantenedorGestionRiesgo,
+    MantenedorGrupoInteres,
+    MantenedorFoda
 } from "@/pages";
 import { MainLayout, MenuLayout } from "@/layout";
 
@@ -24,6 +29,7 @@ export default function Router() {
                     <Route path="/" element={<Login />} />
                     <Route element={<MenuLayout />}>
                         <Route path="/home" element={<Home />} />
+                        <Route path="/matrizCambioSignificativo" element={<MatrizCambioSignificativo />} />
                         <Route path="/mantenedorUsuario" element={<MantenedorUsuario />} />
                         <Route path="/mantenedorCargo" element={<MantenedorCargo />} />
                         <Route path="/mantenedorArea" element={<MantenedorArea />} />
@@ -32,9 +38,13 @@ export default function Router() {
                         <Route path="/mantenedorProceso" element={<MantenedorProceso />} />
                         <Route path="/mantenedorSubProceso" element={<MantenedorSubProceso />} />
                         <Route path="/mantenedorPerfiles" element={<MantenedorPerfiles />} />
-                        <Route path="/mantenedorAsigUsuario" element={<MantenedorAsigUsuario />} />
                         <Route path="/mantenedorMenu" element={<MantenedorMenu />} />
                         <Route path="/mantenedorAsigPerfiles" element={<MantenedorAsigPerfiles />} />
+                        <Route path="/mantenedorPermisosMenu" element={<MantenedorPermisosMenu />} />
+                        <Route path="/mantenedorGestionRiesgo" element={<MantenedorGestionRiesgo />} />
+                        <Route path="/mantenedorGrupoInteres" element={<MantenedorGrupoInteres />} />
+                        <Route path="/mantenedorFoda" element={<MantenedorFoda />} />
+                        <Route path="/pruebaComponent" element={<PruebaComponent />} />
                     </Route>
                 </Route>
             </Routes>

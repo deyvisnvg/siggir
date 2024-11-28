@@ -57,7 +57,7 @@ export default function Login() {
                         />
                         {
                             formik.touched.email && formik.errors.email ? (
-                                <p className="mt-2 text-xs text-red-600">{formik.errors.email}</p>
+                                <p className="pl-1 mt-0.5 text-xs text-red-600">{formik.errors.email}</p>
                             ) : null
                         }
                     </div>
@@ -71,7 +71,7 @@ export default function Login() {
                         />
                         {
                             formik.touched.password && formik.errors.password ? (
-                                <p className="mt-2 text-xs text-red-600">{formik.errors.password}</p>
+                                <p className="pl-1 mt-0.5 text-xs text-red-600">{formik.errors.password}</p>
                             ) : null
                         }
                     </div>

@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dropdownItem {
+    @apply hover:bg-metal-200/40 hover:rounded-lg p-2 font-medium text-gray-800/80 text-sm cursor-pointer;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4F4F4F;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #A0A0A0;
+    border-radius: 6px;
+}

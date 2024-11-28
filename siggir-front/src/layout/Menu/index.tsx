@@ -6,10 +6,10 @@ export default function Menu() {
     return (
         <div className="flex">
             <div>
-                <div className="hidden md:inline-block">
+                <div className="hidden md:inline-block overflow-y-scroll max-h-screen">
                     <SidebarMenu />
                 </div>
-                <div className="hidden max-md:inline-block">
+                <div className="hidden max-md:inline-block overflow-y-scroll max-h-screen">
                     <SidebarIcon />
                 </div>
             </div>

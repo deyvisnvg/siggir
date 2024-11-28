@@ -2,24 +2,39 @@
 
 import { Plus } from 'phosphor-react'
 import {
-    DropdownItem,
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from 'keep-react';
-import { EllipsisHorizontalCircleIcon } from '@heroicons/react/24/outline';
-import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchBar } from '@/components';
+import { EllipsisHorizontalCircleIcon, PencilIcon, EyeIcon } from '@heroicons/react/24/outline';
+import {
+    ButtonComponent,
+    DropdownComponent,
+    Pagination,
+    SearchBar,
+    TooltipHint
+} from '@/components';
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
-import GerenciaAdd from '../GerenciaAdd';
-import GerenciaEdit from '../GerenciaEdit';
+import { ManageModal } from '../../components';
+import { useModal } from '@/hooks/useModal';
 
-export default function GerenciaList() {
+interface Props {
+    getGerencia: () => void
+}
+
+export default function GerenciaList({ getGerencia }: Props) {
     const context = useContext(MyContext);
+    const {
+        openModal,
+        modalType,
+        extraProps,
+        handleOpenModal,
+        handleCloseModal,
+    } = useModal();
 
     if (!context) {
         throw new Error('UserList debe usarse dentro de un PaginationSearchProvider');
@@ -27,77 +42,79 @@ export default function GerenciaList() {
 
     const { current, handlePageChange, pageCount, searchTerm, setSearchTerm } = context;
 
+    const Items = (idGerencia: number) => [
+        {
+            href: "",
+            label: 'Visualizar',
+            icon: <EyeIcon className="size-4 fill-white/30" />,
+        },
+        {
+            label: 'Editar',
+            icon: <PencilIcon className="size-4 fill-white/30" />,
+            onclick: () => handleOpenModal('edit', { getGerencia, idGerencia }),
+        },
+    ]
+
     return (
         <>
-            <Table>
-                <TableCaption>
-                    <div className="flex flex-col items-center gap-5">
-                        <div className="">
-                            <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento Gerencia</h2>
-                        </div>
-                        <div className="flex justify-between gap-5 w-full ">
-                            <ModalComponent
-                                formModal={<GerenciaAdd />}
-                                titleModal="Registrar Gerencia"
-                            >
-                                <div>
-                                    <ButtonComponent
-                                        iconButton={Plus}
-                                        size="sm"
-                                        text="Registrar"
-                                        color="success"
-                                    />
-                                </div>
-                            </ModalComponent>
-                            <SearchBar
-                                placeholder="Buscar..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                        </div>
+            <div className="max-w-4xl m-auto">
+                <div className="flex flex-col items-center gap-5 p-3.5">
+                    <div className="">
+                        <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento Gerencia</h2>
                     </div>
-                </TableCaption>
-                <TableHeader>
-                    <TableRow className='*:bg-gray-600 *:text-white'>
-                        <TableHead className='rounded-s-lg'>
-                            <div className="w-auto">Nombre de Gerencia</div>
-                        </TableHead>
-                        <TableHead className='text-center rounded-e-md'>
-                            <div className="w-auto">Acción</div>
-                        </TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {current.map((item: any) => (
-                        <TableRow key={item.id}>
-                            <TableCell>{item.area}</TableCell>
-                            <TableCell className='flex justify-around'>
-                                <DropdownComponent
-                                    iconButtonDropdown={
-                                        <span className={
-                                            `hint--left
-                                            hint--no-arrow 
-                                            hint--rounded hover:text-green-700 size-6 cursor-pointer`}
-                                            aria-label="Más Opciones"
-                                        >
-                                            <EllipsisHorizontalCircleIcon />
-                                        </span>
-                                    }
-                                    positionDropdown='top'
-                                >
-                                    <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
-                                    <ModalComponent
-                                        formModal={<GerenciaEdit />}
-                                        titleModal="Editar Gerencia"
-                                    >
-                                        <div><DropdownItem>Editar</DropdownItem></div>
-                                    </ModalComponent>
-                                </DropdownComponent>
-                            </TableCell>
+                    <div className="flex justify-between gap-5 w-full ">
+                        <ButtonComponent
+                            iconButton={Plus}
+                            size="sm"
+                            text="Registrar"
+                            color="success"
+                            onClick={() => handleOpenModal('add', { getGerencia })}
+                        />
+                        <SearchBar
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <Table>
+                    <TableHeader>
+                        <TableRow className='*:bg-gray-600 *:text-white'>
+                            <TableHead className='rounded-s-lg'>
+                                <div className="w-auto">Nombre de Gerencia</div>
+                            </TableHead>
+                            <TableHead className='text-center rounded-e-md'>
+                                <div className="w-auto">Acción</div>
+                            </TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody>
+                        {current.map((item: any) => (
+                            <TableRow key={item.gerenciaId}>
+                                <TableCell>{item.gerenciaNombre}</TableCell>
+                                <TableCell className='flex justify-around'>
+                                    <DropdownComponent
+                                        iconButtonDropdown={
+                                            <TooltipHint
+                                                label='Más Opciones'
+                                                content={<EllipsisHorizontalCircleIcon />}
+                                            />
+                                        }
+                                        items={Items(item.gerenciaId)}
+                                        positionDropdown='bottom'
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+            <ManageModal
+                modalType={modalType}
+                extraProps={extraProps}
+                isOpen={openModal}
+                closeModal={handleCloseModal}
+            />
             <Pagination
                 pageCount={pageCount}
                 onPageChange={handlePageChange}

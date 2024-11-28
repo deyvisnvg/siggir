@@ -1,31 +1,33 @@
 import { Button } from 'keep-react'
 import { FC } from 'react';
-import { ButtonVariant } from '@/types/core'
+import { ButtonVariant, ColorVariant, Variant, SizeVariant } from '@/types/core'
 
 interface Props {
     type?: ButtonVariant;
     iconButton?: FC;
-    size: any;
-    variant?: any;
+    size?: SizeVariant;
+    variant?: Variant;
     text: string;
-    color: any;
+    color: ColorVariant;
+    onClick?: () => void
 }
 
 export default function ButtonComponent({
     type = "button",
     iconButton: IconButton,
-    size,
-    variant,
+    size = "sm",
+    variant = "default",
     text,
     color,
+    onClick,
 }: Readonly<Props>) {
-
     return (
         <Button
             type={type}
             size={size}
             variant={variant}
             color={color}
+            onClick={onClick}
         >
             {
                 IconButton ? <IconButton /> : ""

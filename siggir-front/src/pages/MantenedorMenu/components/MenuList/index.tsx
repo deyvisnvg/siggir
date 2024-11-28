@@ -3,24 +3,32 @@
 import { Plus } from 'phosphor-react'
 import {
     DropdownItem,
+    DropdownLabel,
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from 'keep-react';
-import { EllipsisHorizontalCircleIcon } from '@heroicons/react/24/outline';
-import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchBar } from '@/components';
+import { EllipsisHorizontalCircleIcon, EyeIcon, PencilIcon } from '@heroicons/react/24/outline';
+import { ButtonComponent, DropdownComponent, ModalComponent, Pagination, SearchBar, TooltipHint } from '@/components';
 import { useContext } from 'react';
 import { MyContext } from '@/contexts';
-import { Link } from 'react-router-dom';
-import MenuAdd from '../MenuAdd';
-import MenuEdit from '../MenuEdit';
+import { ManageModal } from '../../components';
+import { useModal } from '@/hooks/useModal';
+
 
 export default function MenuList() {
     const context = useContext(MyContext);
+    const {
+        openModal,
+        modalType,
+        extraProps,
+        handleOpenModal,
+        handleCloseModal,
+    } = useModal();
+
 
     if (!context) {
         throw new Error('UserList debe usarse dentro de un PaginationSearchProvider');
@@ -28,36 +36,42 @@ export default function MenuList() {
 
     const { current, handlePageChange, pageCount, searchTerm, setSearchTerm } = context;
 
+    const Items = (idMenu: string | number) => [
+        {
+            href: "",
+            label: 'Visualizar',
+            icon: <EyeIcon className="size-4 fill-white/30" />,
+        },
+        {
+            label: 'Editar',
+            icon: <PencilIcon className="size-4 fill-white/30" />,
+            onclick: () => handleOpenModal('edit', { idMenu }),
+        },
+    ]
+
+
     return (
         <>
+            <div className="flex flex-col items-center gap-5 p-3.5">
+                <div className="">
+                    <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento Menu</h2>
+                </div>
+                <div className="flex justify-between gap-5 w-full ">
+                    <ButtonComponent
+                        iconButton={Plus}
+                        size="sm"
+                        text="Registrar"
+                        color="success"
+                        onClick={() => handleOpenModal('add', {})}
+                    />
+                    <SearchBar
+                        placeholder="Buscar..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </div>
             <Table>
-                <TableCaption>
-                    <div className="flex flex-col items-center gap-5">
-                        <div className="">
-                            <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento Menu</h2>
-                        </div>
-                        <div className="flex justify-between gap-5 w-full ">
-                            <ModalComponent
-                                formModal={<MenuAdd />}
-                                titleModal="Registrar Menu"
-                            >
-                                <div>
-                                    <ButtonComponent
-                                        iconButton={Plus}
-                                        size="sm"
-                                        text="Registrar"
-                                        color="success"
-                                    />
-                                </div>
-                            </ModalComponent>
-                            <SearchBar
-                                placeholder="Buscar..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </TableCaption>
                 <TableHeader>
                     <TableRow className='*:bg-gray-600 *:text-white'>
                         <TableHead className='rounded-s-lg'>
@@ -83,33 +97,25 @@ export default function MenuList() {
                             <TableCell className='flex justify-around'>
                                 <DropdownComponent
                                     iconButtonDropdown={
-                                        <span className={
-                                            `hint--left
-                                            hint--no-arrow 
-                                            hint--rounded hover:text-green-700 size-6 cursor-pointer`}
-                                            aria-label="Más Opciones"
-                                        >
-                                            <EllipsisHorizontalCircleIcon />
-                                        </span>
+                                        <TooltipHint
+                                            label='Más Opciones'
+                                            content={<EllipsisHorizontalCircleIcon />}
+                                        />
                                     }
-                                    positionDropdown='top'
-                                >
-                                    <Link to="/mantenedorAsigPerfiles" state={{ id: item.id }} className='focus:outline-0'>
-                                        <DropdownItem>Asignar Perfil</DropdownItem>
-                                    </Link>
-                                    <DropdownItem className='focus:outline-0'>Visualizar</DropdownItem>
-                                    <ModalComponent
-                                        formModal={<MenuEdit />}
-                                        titleModal="Editar Menu"
-                                    >
-                                        <div><DropdownItem>Editar</DropdownItem></div>
-                                    </ModalComponent>
-                                </DropdownComponent>
+                                    items={Items(item.id)}
+                                    positionDropdown='bottom'
+                                />
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
+            <ManageModal
+                modalType={modalType}
+                extraProps={extraProps}
+                isOpen={openModal}
+                closeModal={handleCloseModal}
+            />
             <Pagination
                 pageCount={pageCount}
                 onPageChange={handlePageChange}

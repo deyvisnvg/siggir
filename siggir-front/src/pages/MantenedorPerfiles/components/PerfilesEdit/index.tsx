@@ -1,6 +1,12 @@
 import { ButtonComponent } from "@/components";
 
-export default function PerfilesEdit() {
+interface Props {
+    /* getGerencia: () => void; */
+    idPerfil: string | number;
+    /* setOpenModal: (open: boolean) => void; */
+}
+
+export default function PerfilesEdit({ idPerfil }: Props) {
     return (
         <form action="" className="px-2">
             <div className="flex flex-col gap-y-3 pt-3.5">

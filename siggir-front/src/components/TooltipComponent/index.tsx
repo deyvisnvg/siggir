@@ -1,20 +1,25 @@
-import { Tooltip, TooltipAction, TooltipContent } from 'keep-react'
+import { Tooltip, TooltipAction, TooltipArrow, TooltipContent, TooltipProvider } from 'keep-react'
 import { ReactNode } from 'react';
 
 interface Props {
-    children: ReactNode;
-    textContent: string;
+    label: string;
     positionTooltip: any
+    content: ReactNode;
 }
 
-const TooltipComponent = ({ children, textContent, positionTooltip }: Props) => {
+const TooltipComponent = ({ label, positionTooltip, content }: Props) => {
     return (
-        <Tooltip placement={positionTooltip}>
-            <TooltipAction>{children}</TooltipAction>
-            <TooltipContent>
-                <p className="text-body-5 font-medium text-white">{textContent}</p>
-            </TooltipContent>
-        </Tooltip>
+        <TooltipProvider delayDuration={350}>
+            <Tooltip>
+                <TooltipAction asChild className='rounded-md size-8 p-1 hover:bg-green-600'>
+                    {content}
+                </TooltipAction>
+                <TooltipContent side={positionTooltip}>
+                    <TooltipArrow />
+                    <p className="text-body-5 font-medium text-white">{label}</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     )
 }
 

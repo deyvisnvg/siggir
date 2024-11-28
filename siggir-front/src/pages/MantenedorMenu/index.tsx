@@ -1,5 +1,5 @@
 import { PaginationSearchProvider } from "@/contexts";
-import { MENU } from "@/core/DataGeneral";
+import { MENU } from "@/controllers/DataGeneral";
 import { MenuList } from "./components";
 
 export default function MantenedorPerfiles() {

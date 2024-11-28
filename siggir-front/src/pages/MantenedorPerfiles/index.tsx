@@ -1,5 +1,5 @@
 import { PaginationSearchProvider } from "@/contexts";
-import { PERFILES } from "@/core/DataGeneral";
+import { PERFILES } from "@/controllers/DataGeneral";
 import { PerfilesList } from "./components";
 
 export default function MantenedorPerfiles() {

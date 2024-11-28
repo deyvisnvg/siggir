@@ -1,10 +1,16 @@
 import { ButtonComponent } from "@/components";
 
-export default function MenuEdit() {
+interface Props {
+    /* getGerencia: () => void; */
+    idMenu: string | number;
+    /* setOpenModal: (open: boolean) => void; */
+}
+
+export default function MenuEdit({ idMenu }: Props) {
     return (
         <form action="" className="px-2">
             <div className="flex flex-col gap-y-3 pt-3.5">
-            <div className="flex flex-col gap-y-0.5">
+                <div className="flex flex-col gap-y-0.5">
                     <label htmlFor="menu" className="text-sm font-medium">Nombre del menu</label>
                     <input type="text"
                         id="menu"
