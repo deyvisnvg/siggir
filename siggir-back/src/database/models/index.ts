@@ -1,0 +1,16 @@
+export { User } from "./User";
+export { Persona } from "./Persona";
+export { Empleado } from "./Empleado";
+export { Cargo } from "./Cargo";
+export { Area } from "./Area";
+export { Gerencia } from "./Gerencia";
+export { Macroproceso } from "./Macroproceso";
+export { Proceso } from "./Proceso";
+export { Subproceso } from "./Subproceso";
+export { Perfil } from "./Perfil";
+export { Menu } from "./Menu";
+export { PerfilMenu } from "./PerfilMenu";
+export { UsuarioPerfil } from "./UsuarioPerfil";
+export { GestionRiesgo } from "./GestionRiesgo";
+export { GrupoInteres } from "./GrupoInteres";
+export { Foda } from "./Foda";

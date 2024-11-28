@@ -1,0 +1,12 @@
+export { gerenciaSchema } from "./GerenciaValidator";
+export { areaSchema } from "./AreaValidator";
+export { cargoSchema } from "./CargoValidator";
+export { userPerEmpSchema } from "./UsuarioValidator";
+export { personaSchema } from "./PersonaValidator";
+export { empleadoSchema } from "./EmpleadoValidator";
+export { gestionRiesgoSchema } from "./GestionRiesgoValidator";
+export { grupoInteresSchema } from "./GrupoInteresValidator";
+export { fodaSchema } from "./FodaValidator";
+export { macroprocesoSchema } from "./MacroprocesoValidator";
+export { procesoSchema } from "./ProcesoValidator";
+export { subprocesoSchema } from "./SubprocesoValidator";
