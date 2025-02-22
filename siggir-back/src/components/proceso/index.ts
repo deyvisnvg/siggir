@@ -6,6 +6,7 @@ import { validate } from "../../middlewares/validation";
 
 const ProcesoRouter: Router = Router();
 
+ProcesoRouter.get("/raw", controller.findAllProcesoRaw);
 ProcesoRouter.get("/", controller.findAllProceso);
 ProcesoRouter.get("/:id", controller.findByIdProceso);
 ProcesoRouter.put("/:id", validate(procesoSchema), controller.updateProceso);

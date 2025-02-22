@@ -41,8 +41,8 @@ export default function UsuarioEdit({ getUsuario, idPersona, setOpenModal }: Pro
         enableReinitialize: true,
         validationSchema: Yup.object({
             dni: Yup.string()
-                .min(9, 'Ingrese mínimo 9 digitos.')
-                .max(9, 'Ingrese máximo 9 digitos.')
+                .min(8, 'Ingrese mínimo 8 digitos.')
+                .max(8, 'Ingrese máximo 8 digitos.')
                 .required('El dni es obligatorio.'),
             nombres: Yup.string()
                 .min(3, 'Ingrese al menos 3 caracteres.')
@@ -118,7 +118,7 @@ export default function UsuarioEdit({ getUsuario, idPersona, setOpenModal }: Pro
 
             resetForm();
             setOpenModal(false);
-            await getUsuario();
+            getUsuario();
         },
     });
     return (

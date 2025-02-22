@@ -1,9 +1,19 @@
-import { Table, Column, Model, PrimaryKey, DataType, AutoIncrement, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, DataType, AutoIncrement, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { Perfil, User } from './index';
 
 @Table({
-    tableName: 'usuarioPerfil',
+    tableName: 'usuario_perfil',
     timestamps: false,
+    indexes: [
+        {
+            unique: false,
+            fields: ['usuario_id']
+        },
+        {
+            unique: false,
+            fields: ['perfil_id']
+        }
+    ]
 })
 export class UsuarioPerfil extends Model {
     @PrimaryKey
@@ -16,9 +26,9 @@ export class UsuarioPerfil extends Model {
 
     @Column({
         field: 'usuarioPerfil_estado',
-        type: DataType.INTEGER
+        type: DataType.STRING
     })
-    userPerfilEstado!: number;
+    userPerfilEstado!: string;
 
     @Column({
         field: 'usuarioPerfil_fechaCreacion',
@@ -40,4 +50,10 @@ export class UsuarioPerfil extends Model {
         type: DataType.INTEGER
     })
     perfilId!: number;
+
+    @BelongsTo(() => User)
+    user!: User;
+
+    @BelongsTo(() => Perfil)
+    perfil!: Perfil;
 }

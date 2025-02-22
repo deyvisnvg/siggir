@@ -33,16 +33,12 @@ export default function MacroprocesoEdit({ getMacroproceso, idMacroproceso, setO
                 .min(5, 'Ingrese al menos 5 caracteres.')
                 .required('La nombre es obligatorio.'),
         }),
-        onSubmit: async (values) => {
-            const body = {
-                ...values,
-                empleadoId: macroproceso?.empleadoId || ''
-            }
-            await updateMacroproceso(idMacroproceso, body);
+        onSubmit: async (values, { resetForm }) => {
+            await updateMacroproceso(idMacroproceso, values);
 
-            /* resetForm(); */
+            resetForm();
             setOpenModal(false);
-            await getMacroproceso();
+            getMacroproceso();
         },
     });
     return (

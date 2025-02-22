@@ -38,8 +38,8 @@ export default function UsuarioAdd({ getUsuario, setOpenModal }: Props) {
         },
         validationSchema: Yup.object({
             dni: Yup.string()
-                .min(9, 'Ingrese mínimo 9 digitos.')
-                .max(9, 'Ingrese máximo 9 digitos.')
+                .min(8, 'Ingrese mínimo 8 digitos.')
+                .max(8, 'Ingrese máximo 8 digitos.')
                 .required('El dni es obligatorio.'),
             nombres: Yup.string()
                 .min(3, 'Ingrese al menos 3 caracteres.')
@@ -119,7 +119,7 @@ export default function UsuarioAdd({ getUsuario, setOpenModal }: Props) {
 
             resetForm();
             setOpenModal(false);
-            await getUsuario();
+            getUsuario();
         },
     });
     return (
@@ -127,7 +127,7 @@ export default function UsuarioAdd({ getUsuario, setOpenModal }: Props) {
             <div>
                 <span className="text-base font-medium text-cyan-800 px-0.5 border-b-2 border-double">Datos Persona</span>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-2 pt-3.5">
-                    <div className="flex flex-col gap-y-1">
+                    <div className="flex flex-col gap-y-1.5">
                         <div className="flex flex-col gap-y-0.5">
                             <label htmlFor="dni" className="text-sm font-medium">DNI</label>
                             <input type="text"
@@ -168,7 +168,7 @@ export default function UsuarioAdd({ getUsuario, setOpenModal }: Props) {
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col gap-y-1">
+                    <div className="flex flex-col gap-y-1.5">
                         <div className="flex flex-col gap-y-0.5">
                             <label htmlFor="email" className="text-sm font-medium">E-mail</label>
                             <input type="email"
@@ -219,7 +219,7 @@ export default function UsuarioAdd({ getUsuario, setOpenModal }: Props) {
             </div>
             <div className="pt-5">
                 <span className="text-base font-medium text-cyan-800 px-0.5 border-b-2 border-double">Datos Usuario</span>
-                <div className="grid grid-cols-1 gap-x-8 gap-y-2 pt-3.5">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-1.5 pt-3.5">
                     <div className="flex flex-col gap-y-0.5">
                         <label htmlFor="user" className="text-sm font-medium">Usuario</label>
                         <input type="text"

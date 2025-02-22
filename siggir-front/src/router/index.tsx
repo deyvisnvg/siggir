@@ -17,7 +17,14 @@ import {
     MantenedorPermisosMenu,
     MantenedorGestionRiesgo,
     MantenedorGrupoInteres,
-    MantenedorFoda
+    MantenedorFoda,
+    MantenedorPeriodo,
+    MantenedorSubPeriodo,
+    RiesgosEmpresariales,
+    ControlesEmpresariales,
+    PlanAccionEmpresariales,
+    IndicadorKriEmpresariales,
+    MatrizEmpresariales
 } from "@/pages";
 import { MainLayout, MenuLayout } from "@/layout";
 
@@ -44,6 +51,13 @@ export default function Router() {
                         <Route path="/mantenedorGestionRiesgo" element={<MantenedorGestionRiesgo />} />
                         <Route path="/mantenedorGrupoInteres" element={<MantenedorGrupoInteres />} />
                         <Route path="/mantenedorFoda" element={<MantenedorFoda />} />
+                        <Route path="/mantenedorPeriodo" element={<MantenedorPeriodo />} />
+                        <Route path="/mantenedorSubPeriodo" element={<MantenedorSubPeriodo />} />
+                        <Route path="/riesgosEmpresariales" element={<RiesgosEmpresariales />} />
+                        <Route path="/controlesEmpresariales" element={<ControlesEmpresariales />} />
+                        <Route path="/planAccionEmpresariales" element={<PlanAccionEmpresariales />} />
+                        <Route path="/indicadorKriEmpresariales" element={<IndicadorKriEmpresariales />} />
+                        <Route path="/matrizEmpresariales" element={<MatrizEmpresariales />} />
                         <Route path="/pruebaComponent" element={<PruebaComponent />} />
                     </Route>
                 </Route>

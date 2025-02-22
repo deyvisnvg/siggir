@@ -36,15 +36,15 @@ import { IconGridDots } from '@tabler/icons-react';
 import { BookmarkSquareIcon, Square3Stack3DIcon, Squares2X2Icon, Bars3Icon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { DropdownComponent, TooltipComponent } from '@/components';
 import { useState } from 'react';
-import { SelectRiesgo } from '@/types/Riesgos';
-import { RIESGOS } from "@/controllers/Riesgos";
+/* import { SelectRiesgo } from '@/types/Riesgo'; */
+/* import { RIESGOS } from "@/controllers/Riesgos"; */
 
 interface Color {
     [key: string]: string;
 }
 
 export default function SidebarIcon() {
-    const [riesgo, setRiesgo] = useState<SelectRiesgo | null>(null);
+    /* const [riesgo, setRiesgo] = useState<SelectRiesgo | null>(null); */
 
     const colores: Color = {
         red: "bg-red-500",
@@ -60,18 +60,18 @@ export default function SidebarIcon() {
             abreviatura,
             color,
         }
-        /* localStorage.setItem('RIESGO_SELECTED', JSON.stringify(riesgoSelected)) */
-        setRiesgo(riesgoSelected);
+        // localStorage.setItem('RIESGO_SELECTED', JSON.stringify(riesgoSelected))
+        /* setRiesgo(riesgoSelected); */
     }
 
-    const Items = RIESGOS.map(({ name, abreviatura, color }) => {
+    /* const Items = RIESGOS.map(({ name, abreviatura, color }) => {
         return {
             label: name,
             icon: <span className={`font-bold rounded-full p-2 ml-0 m-1.5 ${colores[color]}`}>{abreviatura}</span>,
             onclick: () => handleRiesgoChange(name, abreviatura, color),
         }
     })
-
+ */
     return (
         <Sidebar className='h-max max-w-max'>
             <SidebarBody className="space-y-4">
@@ -84,18 +84,18 @@ export default function SidebarIcon() {
                                 content={<IconGridDots />}
                             />
                         }
-                        items={Items}
+                        items={[]}
                         positionDropdown='bottom start'
                     />
                 </span>
 
-                {
+                {/* {
                     riesgo && (
                         <div className={`rounded-s-3xl px-4 pt-2 pb-3.5 text-white min-w-min ${colores[riesgo.color]}`}>
                             <span className='font-semibold'>{riesgo.abreviatura}</span>
                         </div>
                     )
-                }
+                } */}
 
                 <SidebarList className="space-y-0.5 hidden max-lg:inline-block relative z-10">
                     <SidebarItem>
@@ -263,7 +263,7 @@ export default function SidebarIcon() {
                                                     <Squares2X2Icon className='size-5' />
                                                 </Link>
                                             </TooltipAction>
-                                            <TooltipContent side="right" sideOffset={15} className="rounded-none text-body-5 font-normal text-white">Sub Proceso</TooltipContent >
+                                            <TooltipContent side="right" sideOffset={15} className="rounded-none text-body-5 font-normal text-white">SubProceso</TooltipContent >
                                         </Tooltip>
                                     </TooltipProvider>
                                 </SidebarItem>
@@ -288,6 +288,42 @@ export default function SidebarIcon() {
                                                 </Link>
                                             </TooltipAction>
                                             <TooltipContent side="right" sideOffset={15} className="rounded-none text-body-5 font-normal text-white">Menu</TooltipContent >
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </SidebarItem>
+                                <SidebarItem>
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipAction asChild>
+                                                <Link to="/mantenedorGrupoInteres">
+                                                    <Bars3Icon className='size-5' />
+                                                </Link>
+                                            </TooltipAction>
+                                            <TooltipContent side="right" sideOffset={15} className="rounded-none text-body-5 font-normal text-white">Grupo Interes</TooltipContent >
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </SidebarItem>
+                                <SidebarItem>
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipAction asChild>
+                                                <Link to="/mantenedorFoda">
+                                                    <Bars3Icon className='size-5' />
+                                                </Link>
+                                            </TooltipAction>
+                                            <TooltipContent side="right" sideOffset={15} className="rounded-none text-body-5 font-normal text-white">Foda</TooltipContent >
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </SidebarItem>
+                                <SidebarItem>
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipAction asChild>
+                                                <Link to="/mantenedorPeriodo">
+                                                    <Bars3Icon className='size-5' />
+                                                </Link>
+                                            </TooltipAction>
+                                            <TooltipContent side="right" sideOffset={15} className="rounded-none text-body-5 font-normal text-white">Periodo</TooltipContent >
                                         </Tooltip>
                                     </TooltipProvider>
                                 </SidebarItem>

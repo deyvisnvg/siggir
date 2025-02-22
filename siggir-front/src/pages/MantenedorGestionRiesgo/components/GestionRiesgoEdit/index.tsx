@@ -49,7 +49,7 @@ export default function GestionRiesgoEdit({ getGestionRiesgo, idGestion, setOpen
 
             resetForm();
             setOpenModal(false);
-            await getGestionRiesgo();
+            getGestionRiesgo();
         },
     });
     return (

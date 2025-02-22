@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ProcesoModule } from "../../database/lib";
 import { success, failure } from "../../responses";
 
-const { create, findAll, findById, update } = ProcesoModule();
+const { create, findAllRaw, findAll, findById, update } = ProcesoModule();
 
 export const addProceso = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -15,9 +15,20 @@ export const addProceso = async (req: Request, res: Response): Promise<void> => 
     }
 }
 
+export const findAllProcesoRaw = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const proceso = await findAllRaw();
+
+        success({ res, status: 200, data: proceso });
+    } catch (error) {
+        failure({ res, status: 500, message: error });
+    }
+}
+
 export const findAllProceso = async (req: Request, res: Response): Promise<void> => {
     try {
         const proceso = await findAll();
+        /* console.log("procesooo", proceso) */
 
         success({ res, status: 200, data: proceso });
     } catch (error) {

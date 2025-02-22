@@ -66,7 +66,7 @@ export default function CargoAdd({ getCargo, setOpenModal }: Props) {
                     }
                 </div>
                 <div className="flex flex-col">
-                    <label htmlFor="areaId" className="text-sm font-medium">Cargo perteneciente</label>
+                    <label htmlFor="areaId" className="text-sm font-medium">Area perteneciente</label>
                     <select
                         id="areaId"
                         className="rounded-lg border border-gray-400 py-1.5 px-3 text-sm"

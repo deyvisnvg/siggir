@@ -8,4 +8,5 @@ export default {
     DB_USER: process.env.DB_USER || 'root',
     DB_PASS: process.env.DB_PASS || 'root',
     DB_HOST: process.env.DB_HOST || 'localhost',
+    FILES_ROUTE: process.env.FILES_ROUTE || '/public',
 }

@@ -34,7 +34,7 @@ export default function FodaAdd({ getFoda, setOpenModal }: Props) {
 
             resetForm();
             setOpenModal(false);
-            await getFoda();
+            getFoda();
         },
     });
 

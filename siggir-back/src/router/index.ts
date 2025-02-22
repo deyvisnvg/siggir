@@ -13,6 +13,13 @@ const _routes: [string, Router][] = [
     ["macroproceso", ROUTES.MacroprocesoRouter],
     ["proceso", ROUTES.ProcesoRouter],
     ["subproceso", ROUTES.SubprocesoRouter],
+    ["periodo", ROUTES.PeriodoRouter],
+    ["subperiodo", ROUTES.SubPeriodoRouter],
+    ["catalogo", ROUTES.CatalogoRouter],
+    ["riesgo", ROUTES.RiesgoRouter],
+    ["control", ROUTES.ControlRouter],
+    ["planaccion", ROUTES.PlanAccionRouter],
+    ["indicadorkri", ROUTES.IndicadorKriRouter],
 ];
 
 const routes = (app: Application): void => {

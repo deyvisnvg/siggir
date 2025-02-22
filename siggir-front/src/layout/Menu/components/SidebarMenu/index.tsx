@@ -34,6 +34,7 @@ import { DropdownComponent, TooltipComponent } from '@/components';
 import { useEffect } from 'react';
 import { GestionRiesgoController } from "@/controllers";
 import { useRiesgoSelect } from "@/hooks/useRiesgoSelect";
+import { useEffectOnce } from '@/hooks/useEffectOnce';
 
 interface Item {
     label: string;
@@ -43,25 +44,25 @@ interface Item {
 
 export default function SidebardMenu() {
     const { gestionRiesgos, readGestionRiesgo } = GestionRiesgoController();
-    const { riesgoSelect, setRiesgoSelect, handleclickRiesgo } = useRiesgoSelect();
-    const riesgoStorage = localStorage.getItem('RIESGO_SELECTED');
+    const { riesgoSelect, setRiesgoSelect, handleClickRiesgo } = useRiesgoSelect();
 
     useEffect(() => {
-        readGestionRiesgo();
-        if (riesgoStorage) {
-            setRiesgoSelect(JSON.parse(riesgoStorage));
-        }
-    }, [])
+        console.log("holaaaa", gestionRiesgos)
+        localStorage.removeItem("RIESGO_SELECTED");
 
-    const Items: Item[] = gestionRiesgos ? gestionRiesgos.map(({ gestionNombre, gestionAbreviatura, gestionColor }) => {
+        if (gestionRiesgos && gestionRiesgos.length > 0) {
+            localStorage.setItem("RIESGO_SELECTED", JSON.stringify({ ...gestionRiesgos[0] }))
+            setRiesgoSelect({ ...gestionRiesgos[0] });
+        }
+    }, [gestionRiesgos]);
+
+    useEffectOnce(readGestionRiesgo);
+
+    const Items: Item[] = gestionRiesgos ? gestionRiesgos.map((item) => {
         return {
-            label: gestionNombre,
-            icon: <span className={`font-bold rounded-full p-2 ml-0 m-1.5 ${gestionColor}`}>{gestionAbreviatura}</span>,
-            onclick: () => handleclickRiesgo({
-                name: gestionNombre,
-                abreviatura: gestionAbreviatura,
-                color: gestionColor
-            }),
+            label: item.gestionNombre,
+            icon: <span className={`font-bold rounded-full p-2 ml-0 m-1.5 ${item.gestionColor}`}>{item.gestionAbreviatura}</span>,
+            onclick: () => handleClickRiesgo(item),
         }
     }) : []
 
@@ -85,162 +86,198 @@ export default function SidebardMenu() {
                         positionDropdown='bottom start'
                     />
                 </span>
-                {
+                {/* {
                     riesgoSelect && (
-                        <div className={`rounded-s-3xl px-4 pt-2 pb-3.5 text-white min-w-min ${riesgoSelect.color}`}>
-                            <span className='font-semibold'>{riesgoSelect.abreviatura}</span>
-                            <p className="line-clamp-2 text-xs">{riesgoSelect.name}</p>
+                        <div className={`rounded-s-3xl px-4 pt-2 pb-3.5 text-white min-w-min ${riesgoSelect.gestionColor}`}>
+                            <span className='font-semibold'>{riesgoSelect.gestionAbreviatura}</span>
+                            <p className="line-clamp-2 text-xs">{riesgoSelect.gestionNombre}</p>
                         </div>
                     )
-                }
+                } */}
+                <SidebarList className="space-y-0.5">
+                    <Link to="/home">
+                        <SidebarItem className=''>
+                            <HouseLine size={20} />
+                            Home
+                        </SidebarItem>
+                    </Link>
 
-                {
-                    riesgoSelect?.abreviatura == "GCS" ?
-                        <SidebarList className="space-y-0.5">
-                            <Link to="/home">
-                                <SidebarItem className=''>
-                                    <HouseLine size={20} />
-                                    Home
-                                </SidebarItem>
-                            </Link>
-                            <Link to="/matrizCambioSignificativo">
-                                <SidebarItem className=''>
-                                    <HouseLine size={20} />
-                                    Cambio Significativo
-                                </SidebarItem>
-                            </Link>
-                        </SidebarList>
-                        :
-                        <SidebarList className="space-y-0.5">
-                            <Link to="/pruebaComponent">
-                                <SidebarItem className=''>
-                                    <HouseLine size={20} />
-                                    Prueba
-                                </SidebarItem>
-                            </Link>
-                            <Link to="/home">
-                                <SidebarItem className=''>
-                                    <HouseLine size={20} />
-                                    Home
-                                </SidebarItem>
-                            </Link>
-                            <SidebarItem className=''>
-                                <PresentationChart size={20} />
-                                Procesos
-                            </SidebarItem>
-                            <SidebarItem className=''>
-                                <PresentationChart size={20} />
-                                Riesgos
-                            </SidebarItem>
-                            <SidebarItem className=''>
-                                <PresentationChart size={20} />
-                                Controles
-                            </SidebarItem>
-                            <SidebarItem className=''>
-                                <PresentationChart size={20} />
-                                Eventos
-                            </SidebarItem>
-
+                    {
+                        riesgoSelect && (
                             <SidebarItem dropdown>
                                 <SidebarDropdown>
-                                    <SidebarCollapse>
-                                        <div className="flex items-center gap-3">
-                                            <Gear size={20} />
-                                            Mantenimiento
+                                    {/* <SidebarCollapse className={`flex items-center mb-1 gap-3 font-bold rounded-2xl text-white hover:text-white hover:${riesgoSelect.gestionColor} ${riesgoSelect.gestionColor}`}> */}
+                                    <SidebarCollapse className={`flex items-center mb-1 gap-3 rounded-2xl`}>
+                                        <div className={`flex items-center gap-3 `}>
+                                            <span className={`font-semibold rounded-2xl p-1.5 text-xs text-white hover:text-white ${riesgoSelect.gestionColor}`}>{riesgoSelect.gestionAbreviatura}</span>
+                                            {riesgoSelect.gestionNombre}
                                         </div>
                                         <span className="group-open:-rotate-180">
                                             <CaretDown size={20} />
                                         </span>
                                     </SidebarCollapse>
-
                                     <SidebarDropdownList>
-                                        <Link to="/mantenedorUsuario">
-                                            <SidebarItem>
-                                                <Users size={20} />
-                                                Usuario
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorCargo">
-                                            <SidebarItem>
-                                                <SuitcaseSimple size={20} />
-                                                Cargo
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorArea">
-                                            <SidebarItem>
-                                                <BoundingBox size={20} />
-                                                Area
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorGerencia">
-                                            <SidebarItem>
-                                                <BookmarkSquareIcon className='size-5' />
-                                                Gerencia
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorGestionRiesgo">
-                                            <SidebarItem>
-                                                <PresentationChart size={20} />
-                                                Gestion Riesgos
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorMacroproceso">
-                                            <SidebarItem>
-                                                <Barcode size={20} />
-                                                Macroproceso
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorProceso">
-                                            <SidebarItem>
-                                                <Square3Stack3DIcon className='size-5' />
-                                                Proceso
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorSubProceso">
-                                            <SidebarItem>
-                                                <Squares2X2Icon className='size-5' />
-                                                Sub Proceso
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorPerfiles">
-                                            <SidebarItem>
-                                                <UserGroupIcon className='size-5' />
-                                                Perfiles
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorMenu">
-                                            <SidebarItem>
-                                                <Bars3Icon className='size-5' />
-                                                Menu
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorGrupoInteres">
-                                            <SidebarItem>
-                                                <Bars3Icon className='size-5' />
-                                                Grupo Interes
-                                            </SidebarItem>
-                                        </Link>
-                                        <Link to="/mantenedorFoda">
-                                            <SidebarItem>
-                                                <Bars3Icon className='size-5' />
-                                                Foda
-                                            </SidebarItem>
-                                        </Link>
+                                        {
+                                            riesgoSelect.gestionAbreviatura === "GCS" ? (
+                                                <>
+                                                    <Link to="/matrizCambioSignificativo">
+                                                        <SidebarItem className=''>
+                                                            <HouseLine size={20} />
+                                                            Cambio Significativo
+                                                        </SidebarItem>
+                                                    </Link>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Link to="/riesgosEmpresariales">
+                                                        <SidebarItem>
+                                                            <Users size={20} />
+                                                            Riesgos
+                                                        </SidebarItem>
+                                                    </Link>
+                                                    <Link to="/matrizEmpresariales">
+                                                        <SidebarItem>
+                                                            <SuitcaseSimple size={20} />
+                                                            Matriz
+                                                        </SidebarItem>
+                                                    </Link>
+                                                    {/* <Link to="/controlesEmpresariales">
+                                                        <SidebarItem>
+                                                            <Users size={20} />
+                                                            Controles
+                                                        </SidebarItem>
+                                                    </Link>
+                                                    <Link to="/planAccionEmpresariales">
+                                                        <SidebarItem>
+                                                            <BoundingBox size={20} />
+                                                            Plan de Acción
+                                                        </SidebarItem>
+                                                    </Link>
+                                                    <Link to="/indicadorKriEmpresariales">
+                                                        <SidebarItem>
+                                                            <BoundingBox size={20} />
+                                                            KRI
+                                                        </SidebarItem>
+                                                    </Link> */}
+                                                </>
+                                            )
+                                        }
                                     </SidebarDropdownList>
                                 </SidebarDropdown>
                             </SidebarItem>
+                        )
+                    }
+                    <SidebarItem dropdown>
+                        <SidebarDropdown>
+                            <SidebarCollapse>
+                                <div className="flex items-center gap-3">
+                                    <Gear size={20} />
+                                    Mantenimiento
+                                </div>
+                                <span className="group-open:-rotate-180">
+                                    <CaretDown size={20} />
+                                </span>
+                            </SidebarCollapse>
 
-                            <SidebarItem>
-                                <ChartPie size={20} />
-                                Reportes
-                            </SidebarItem>
-                            <Divider />
-                            <SidebarItem>
-                                <SignOut size={20} />
-                                Cerrar Sesión
-                            </SidebarItem>
-                        </SidebarList>
-                }
+                            <SidebarDropdownList>
+                                <Link to="/mantenedorUsuario">
+                                    <SidebarItem>
+                                        <Users size={20} />
+                                        Usuario
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorCargo">
+                                    <SidebarItem>
+                                        <SuitcaseSimple size={20} />
+                                        Cargo
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorArea">
+                                    <SidebarItem>
+                                        <BoundingBox size={20} />
+                                        Area
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorGerencia">
+                                    <SidebarItem>
+                                        <BookmarkSquareIcon className='size-5' />
+                                        Gerencia
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorGestionRiesgo">
+                                    <SidebarItem>
+                                        <PresentationChart size={20} />
+                                        Gestion Sistema
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorMacroproceso">
+                                    <SidebarItem>
+                                        <Barcode size={20} />
+                                        Macroproceso
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorProceso">
+                                    <SidebarItem>
+                                        <Square3Stack3DIcon className='size-5' />
+                                        Proceso
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorSubProceso">
+                                    <SidebarItem>
+                                        <Squares2X2Icon className='size-5' />
+                                        SubProceso
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorPerfiles">
+                                    <SidebarItem>
+                                        <UserGroupIcon className='size-5' />
+                                        Perfiles
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorMenu">
+                                    <SidebarItem>
+                                        <Bars3Icon className='size-5' />
+                                        Menu
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorGrupoInteres">
+                                    <SidebarItem>
+                                        <Bars3Icon className='size-5' />
+                                        Grupo Interes
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorFoda">
+                                    <SidebarItem>
+                                        <Bars3Icon className='size-5' />
+                                        Foda
+                                    </SidebarItem>
+                                </Link>
+                                <Link to="/mantenedorPeriodo">
+                                    <SidebarItem>
+                                        <Bars3Icon className='size-5' />
+                                        Periodo
+                                    </SidebarItem>
+                                </Link>
+                            </SidebarDropdownList>
+                        </SidebarDropdown>
+                    </SidebarItem>
+
+                    <SidebarItem>
+                        <ChartPie size={20} />
+                        Reportes
+                    </SidebarItem>
+                    <Link to="/pruebaComponent">
+                        <SidebarItem className=''>
+                            <HouseLine size={20} />
+                            Prueba
+                        </SidebarItem>
+                    </Link>
+                    <Divider />
+                    <SidebarItem>
+                        <SignOut size={20} />
+                        Cerrar Sesión
+                    </SidebarItem>
+                </SidebarList>
             </SidebarBody>
 
             <SidebarFooter>

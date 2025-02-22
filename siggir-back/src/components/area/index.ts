@@ -6,6 +6,7 @@ import { validate } from "../../middlewares/validation";
 
 const areaRouter: Router = Router();
 
+areaRouter.get("/raw", controller.findAllAreaRaw);
 areaRouter.get("/", controller.findAllArea);
 areaRouter.get("/:id", controller.findByIdArea);
 areaRouter.put("/:id", validate(areaSchema), controller.updateArea);

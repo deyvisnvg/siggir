@@ -16,7 +16,18 @@ import {
     UsuarioPerfil,
     GestionRiesgo,
     GrupoInteres,
-    Foda
+    Foda,
+    Periodo,
+    Riesgo,
+    Control,
+    PlanAccion,
+    IndicadorKri,
+    Catalogo,
+    Subperiodo,
+    RiesgoGrupoInteres,
+    ProcesoImpactado,
+    RiesgoFoda,
+    Sustento
 } from "./models";
 
 export const sequelize = new Sequelize({
@@ -37,6 +48,17 @@ export const sequelize = new Sequelize({
         UsuarioPerfil,
         GestionRiesgo,
         GrupoInteres,
-        Foda
+        Foda,
+        Periodo,
+        Riesgo,
+        Control,
+        PlanAccion,
+        IndicadorKri,
+        Catalogo,
+        Subperiodo,
+        RiesgoGrupoInteres,
+        ProcesoImpactado,
+        RiesgoFoda,
+        Sustento,
     ],
 })

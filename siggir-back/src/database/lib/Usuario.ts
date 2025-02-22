@@ -45,7 +45,7 @@ export const UsuarioModule = () => {
         });
     }
 
-    async function update(userId: number, body: UsuarioBody, transaction: Transaction) {
+    async function update(userId: string, body: UsuarioBody, transaction: Transaction) {
         const condicion = {
             where: {
                 userId

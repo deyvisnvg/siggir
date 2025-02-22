@@ -26,16 +26,6 @@ export class Macroproceso extends Model {
     })
     macroproNombre!: string;
 
-    @ForeignKey(() => Empleado)
-    @Column({
-        field: 'empleado_id',
-        type: DataType.UUID
-    })
-    empleadoId!: string;
-
-    @BelongsTo(() => Empleado)
-    empleado!: Empleado;
-
     @HasMany(() => Proceso)
     procesos!: Proceso[];
 }

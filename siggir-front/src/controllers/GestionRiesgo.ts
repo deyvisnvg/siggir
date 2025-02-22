@@ -12,7 +12,7 @@ import { ColorSpanish } from '@/utils/ColorTailwindcss';
 /* type SetActiveColor = (color: ActiveColor | null) => void; */
 
 /* , setActiveColor: SetActiveColor */
-type handleClickColor = (color: string) => void;
+type handleClickColor = ((color: string) => void) | undefined;
 
 export default function GestionRiesgoController() {
     const [gestionRiesgos, setGestionRiesgos] = useState<GestionRiesgoData[] | undefined>(undefined);
@@ -21,7 +21,7 @@ export default function GestionRiesgoController() {
     async function readGestionRiesgo() {
         try {
             const { ok, data } = await read({ url: "gestionRiesgo" });
-            console.log(data)
+            console.log("Lista_GestionSistema", data)
 
             if (!ok) {
                 return toast.error("No se pudo obtener la data");
@@ -34,7 +34,7 @@ export default function GestionRiesgoController() {
 
     async function createGestionRiesgo(body: GestionRiesgoBody) {
         try {
-            console.log(body)
+            /* console.log(body) */
             const { ok } = await create({ url: "gestionRiesgo/add", body });
 
             if (!ok) {
@@ -48,15 +48,16 @@ export default function GestionRiesgoController() {
         }
     }
 
-    async function findGestionRiesgoById(idGestionRiesgo: number, handleClickColor: handleClickColor) {
+    async function findGestionRiesgoById(idGestionRiesgo: number, handleClickColor?: handleClickColor) {
         try {
             const { ok, data } = await read({ id: idGestionRiesgo, url: "gestionRiesgo" });
+            /* console.log("data", data) */
             if (!ok) {
                 toast.error("No se pudo obtener la data");
                 return;
             }
             setGestionRiesgo(data);
-            handleClickColor(data.gestionColor);
+            handleClickColor?.(data.gestionColor);
 
             /* setActiveColor({
                 nameColor: handleColor(data.gestionColor) ?? 'Desconocido',
@@ -69,7 +70,7 @@ export default function GestionRiesgoController() {
 
     async function updateGestionRiesgo(idGestion: number, body: GestionRiesgoBody) {
         try {
-            console.log(body)
+            /* console.log(body) */
             const { ok } = await update({ id: idGestion, url: "gestionRiesgo", body });
 
             if (!ok) {

@@ -1,4 +1,6 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, BelongsToMany } from 'sequelize-typescript';
+import { RiesgoGrupoInteres } from './RiesgoGrupoInteres';
+import { Riesgo } from './Riesgo';
 
 @Table({
     tableName: 'grupoInteres',
@@ -18,4 +20,7 @@ export class GrupoInteres extends Model {
         type: DataType.STRING
     })
     grupoInteresNombre!: string;
+
+    @BelongsToMany(() => Riesgo, () => RiesgoGrupoInteres, 'riesgoGrupoInteres')
+    riesgos!: Riesgo[];
 }

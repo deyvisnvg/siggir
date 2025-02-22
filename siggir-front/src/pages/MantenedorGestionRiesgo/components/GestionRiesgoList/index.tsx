@@ -38,6 +38,11 @@ export default function GestionRiesgoList({ getGestionRiesgo }: Props) {
 
     const Items = (idGestion: number) => [
         {
+            href: `/mantenedorSubPeriodo?idGestion=${idGestion}`,
+            label: 'Ver SubPeriodos',
+            icon: <PencilIcon className="size-4 fill-white/30" />,
+        },
+        {
             href: "",
             label: 'Visualizar',
             icon: <EyeIcon className="size-4 fill-white/30" />,
@@ -53,7 +58,7 @@ export default function GestionRiesgoList({ getGestionRiesgo }: Props) {
         <>
             <div className="flex flex-col items-center gap-5 p-3.5">
                 <div className="">
-                    <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento Gestion Riesgo</h2>
+                    <h2 className="text-heading-6 font-semibold text-metal-900 dark:text-white">Mantenimiento Gestion Sistema</h2>
                 </div>
                 <div className="flex justify-between gap-5 w-full ">
                     <ButtonComponent

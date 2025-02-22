@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { SelectRiesgo } from '@/types/GestionRiesgo';
+import { GestionRiesgoData } from '@/types/GestionRiesgo';
+import { useNavigate } from "react-router-dom";
 
 export function useRiesgoSelect() {
-    const [riesgoSelect, setRiesgoSelect] = useState<SelectRiesgo | null>(null);
+    const navigate = useNavigate();
+    const [riesgoSelect, setRiesgoSelect] = useState<GestionRiesgoData | null>(null);
 
-    const handleclickRiesgo = (selectRiesgo: SelectRiesgo) => {
+    const handleClickRiesgo = (selectRiesgo: GestionRiesgoData) => {
         localStorage.setItem("RIESGO_SELECTED", JSON.stringify({ ...selectRiesgo }))
         setRiesgoSelect({ ...selectRiesgo })
+        navigate('/home');
     }
 
     return {
         riesgoSelect,
         setRiesgoSelect,
-        handleclickRiesgo
+        handleClickRiesgo
     }
 }
 

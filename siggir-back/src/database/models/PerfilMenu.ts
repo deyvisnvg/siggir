@@ -1,9 +1,19 @@
-import { Table, Column, Model, PrimaryKey, DataType, AutoIncrement, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, DataType, AutoIncrement, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { Menu, Perfil } from './index';
 
 @Table({
-    tableName: 'perfilMenu',
+    tableName: 'perfil_menu',
     timestamps: false,
+    indexes: [
+        {
+            unique: false,
+            fields: ['menu_id']
+        },
+        {
+            unique: false,
+            fields: ['perfil_id']
+        }
+    ]
 })
 export class PerfilMenu extends Model {
     @PrimaryKey
@@ -16,9 +26,9 @@ export class PerfilMenu extends Model {
 
     @Column({
         field: 'perfilMenu_estado',
-        type: DataType.INTEGER
+        type: DataType.STRING
     })
-    perfilMenuEstado!: number;
+    perfilMenuEstado!: string;
 
     @Column({
         field: 'perfilMenu_fechaCreacion',
@@ -32,7 +42,7 @@ export class PerfilMenu extends Model {
         field: 'menu_id',
         type: DataType.INTEGER
     })
-    userId!: string;
+    menuId!: string;
 
     @ForeignKey(() => Perfil)
     @Column({
@@ -40,4 +50,10 @@ export class PerfilMenu extends Model {
         type: DataType.INTEGER
     })
     perfilId!: number;
+
+    @BelongsTo(() => Menu)
+    menu!: Menu;
+
+    @BelongsTo(() => Perfil)
+    perfil!: Perfil;
 }

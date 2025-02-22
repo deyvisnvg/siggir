@@ -13,9 +13,7 @@ interface Props {
 
 export default function GestionRiesgoAdd({ getGestionRiesgo, setOpenModal }: Props) {
     const { activeColor, handleClickColor } = useColor();
-    const {
-        createGestionRiesgo
-    } = GestionRiesgoController();
+    const { createGestionRiesgo } = GestionRiesgoController();
 
     const formik = useFormik({
         initialValues: {
@@ -38,13 +36,13 @@ export default function GestionRiesgoAdd({ getGestionRiesgo, setOpenModal }: Pro
             const body = {
                 ...values,
                 gestionColor: activeColor?.colorStyle || '',
-                empleadoId: "37bfec08-4e7d-4118-b390-ebcfaf7b40d2"
+                empleadoId: "c2e785b3-fcd7-4bd2-98b4-9587c4849201"
             }
             await createGestionRiesgo(body);
 
             resetForm();
             setOpenModal(false);
-            await getGestionRiesgo();
+            getGestionRiesgo();
         },
     });
 

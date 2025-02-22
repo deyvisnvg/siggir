@@ -1,6 +1,6 @@
 'use strict'
 
-import { Proceso, Macroproceso } from "../../database/models";
+import { Proceso, Macroproceso, Subproceso } from "../../database/models";
 import { ProcesoBody } from "../../types/Proceso";
 
 export const ProcesoModule = () => {
@@ -8,13 +8,27 @@ export const ProcesoModule = () => {
         return await Proceso.create({ ...body });
     }
 
-    async function findAll() {
+    async function findAllRaw() {
         return await Proceso.findAll({
             include: [{
                 model: Macroproceso
             }],
             raw: true,
         });
+    }
+
+    async function findAll() {
+        return await Proceso.findAll({
+            include: [
+                {
+                    model: Macroproceso
+                },
+                {
+                    model: Subproceso
+                }
+            ],
+        });
+        /* return result.toJSON(); */
     }
 
     async function findById(procesoId: number) {
@@ -40,6 +54,7 @@ export const ProcesoModule = () => {
 
     return {
         create,
+        findAllRaw,
         findAll,
         findById,
         update,

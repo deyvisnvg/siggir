@@ -34,7 +34,7 @@ export default function ProcesoEdit({ getProceso, idProceso, setOpenModal }: Pro
         enableReinitialize: true,
         validationSchema: Yup.object({
             procesoCodigo: Yup.string()
-                .min(3, 'Ingrese al menos 3 caracteres.')
+                .min(2, 'Ingrese al menos 2 caracteres.')
                 .required('El código es obligatorio.'),
             procesoNombre: Yup.string()
                 .min(3, 'Ingrese al menos 3 caracteres.')

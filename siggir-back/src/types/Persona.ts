@@ -5,7 +5,7 @@ export interface PersonaData {
     nombres: string;
     apellidos: string;
     email: string;
-    fechaNacimiento: string;
+    fechaNacimiento: Date;
     userId: string;
     empleadoId: string;
     usuario?: UsuarioData

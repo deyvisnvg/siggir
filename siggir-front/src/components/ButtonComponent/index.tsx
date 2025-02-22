@@ -1,6 +1,6 @@
 import { Button } from 'keep-react'
 import { FC } from 'react';
-import { ButtonVariant, ColorVariant, Variant, SizeVariant } from '@/types/core'
+import { ButtonVariant, ColorVariant, Variant, SizeVariant } from '@/types/core';
 
 interface Props {
     type?: ButtonVariant;

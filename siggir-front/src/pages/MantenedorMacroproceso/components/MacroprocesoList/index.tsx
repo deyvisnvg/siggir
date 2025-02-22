@@ -66,7 +66,7 @@ export default function MacroprocesoList({ getMacroproceso }: Props) {
                         size="sm"
                         text="Registrar"
                         color="success"
-                        onClick={() => handleOpenModal('add', {})}
+                        onClick={() => handleOpenModal('add', { getMacroproceso })}
                     />
                     <SearchBar
                         placeholder="Buscar..."

@@ -26,21 +26,15 @@ export default function MacroprocesoAdd({ getMacroproceso, setOpenModal }: Props
                 .required('La nombre es obligatorio.'),
         }),
         onSubmit: async (values, { resetForm }) => {
-            const body = {
-                ...values,
-                empleadoId: "37bfec08-4e7d-4118-b390-ebcfaf7b40d2"
-            }
+            await createMacroproceso(values);
+
             resetForm();
             setOpenModal(false);
-
-            await Promise.all([
-                createMacroproceso(body),
-                getMacroproceso(),
-            ]);
+            getMacroproceso();
         },
     });
     return (
-        <form action="" className="px-2" onSubmit={formik.handleSubmit}>
+        <form className="px-2" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-y-3 pt-3.5">
                 <div className="flex flex-col">
                     <label htmlFor="macroproCodigo" className="text-sm font-medium">Código macroproceso</label>

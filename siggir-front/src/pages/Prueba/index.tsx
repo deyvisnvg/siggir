@@ -4,6 +4,10 @@ import { Chart, registerables } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 /* import 'chart.js'; */
 
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+
+
+
 Chart.register(...registerables, annotationPlugin);
 
 const RiskChart = () => {
@@ -95,10 +99,76 @@ const RiskChart = () => {
         }
     };
 
-    return <Scatter data={data} options={options} />;
+    return (
+        <>
+            <Scatter data={data} options={options} />
+
+            <div className="flex h-screen w-full justify-center pt-24 px-4">
+                <div className="w-full max-w-5xl">
+                    <TabGroup>
+                        <TabList className="flex gap-4">
+                            <Tab
+                                className="
+                                rounded-full 
+                                py-1 px-3 
+                                text-sm/6 font-semibold 
+                                focus:outline-none 
+                                data-[selected]:bg-gray-300 
+                                data-[hover]:bg-gray-300 
+                                data-[selected]:data-[hover]:bg-gray-300 
+                                data-[focus]:outline-1 
+                                data-[focus]:outline-gray-300"
+                            >
+                                Tab 1
+                            </Tab>
+                            <Tab
+                                className="
+                                rounded-full 
+                                py-1 px-3 
+                                text-sm/6 font-semibold 
+                                focus:outline-none 
+                                data-[selected]:bg-gray-300 
+                                data-[hover]:bg-gray-300 
+                                data-[selected]:data-[hover]:bg-gray-300 
+                                data-[focus]:outline-1 
+                                data-[focus]:outline-gray-300"
+                            >
+                                Tab 2
+                            </Tab>
+                            <Tab
+                                className="
+                                rounded-full 
+                                py-1 px-3 
+                                text-sm/6 font-semibold 
+                                focus:outline-none 
+                                data-[selected]:bg-gray-300 
+                                data-[hover]:bg-gray-300 
+                                data-[selected]:data-[hover]:bg-gray-300 
+                                data-[focus]:outline-1 
+                                data-[focus]:outline-gray-300"
+                            >
+                                Tab 3
+                            </Tab>
+                        </TabList>
+                        <TabPanels className="mt-3">
+                            <TabPanel className="rounded-xl bg-gray-100 p-3">
+                                Hola
+                            </TabPanel>
+                            <TabPanel className="rounded-xl bg-gray-100 p-3">
+                                Hola 2
+                            </TabPanel>
+                            <TabPanel className="rounded-xl bg-gray-100 p-3">
+                                Hola 3
+                            </TabPanel>
+                        </TabPanels>
+                    </TabGroup>
+                </div>
+            </div>
+        </>
+    );
 };
 
- export default RiskChart;
+export default RiskChart;
 
 
 /*

@@ -1,6 +1,6 @@
 'use strict'
 
-import { Area, Gerencia } from "../../database/models";
+import { Area, Cargo, Gerencia } from "../../database/models";
 import { AreaBody } from "../../types/Area";
 
 export const AreaModule = () => {
@@ -8,12 +8,25 @@ export const AreaModule = () => {
         return await Area.create({ ...body });
     }
 
-    async function findAll() {
+    async function findAllRaw() {
         return await Area.findAll({
             include: [{
                 model: Gerencia
             }],
             raw: true,
+        });
+    }
+
+    async function findAll() {
+        return await Area.findAll({
+            include: [
+                {
+                    model: Gerencia
+                },
+                {
+                    model: Cargo
+                }
+            ],
         });
     }
 
@@ -40,6 +53,7 @@ export const AreaModule = () => {
 
     return {
         create,
+        findAllRaw,
         findAll,
         findById,
         update,

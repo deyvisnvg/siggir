@@ -9,8 +9,22 @@ export default function ProcesoController() {
 
     async function readProceso() {
         try {
-            const { ok, data } = await read({ url: "proceso" });
+            const { ok, data } = await read({ url: "proceso/raw" });
             console.log(data)
+
+            if (!ok) {
+                return toast.error("No se pudo obtener la data");
+            }
+            setProcesos(data);
+        } catch (error) {
+            toast.error("Error al obtener la data");
+        }
+    }
+
+    async function readProcesoAll() {
+        try {
+            const { ok, data } = await read({ url: "proceso" });
+            /* console.log("procesooo", data) */
 
             if (!ok) {
                 return toast.error("No se pudo obtener la data");
@@ -69,6 +83,7 @@ export default function ProcesoController() {
         procesos,
         proceso,
         readProceso,
+        readProcesoAll,
         createProceso,
         findProcesoById,
         updateProceso

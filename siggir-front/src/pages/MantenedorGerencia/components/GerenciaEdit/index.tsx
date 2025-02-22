@@ -32,12 +32,12 @@ export default function GerenciaEdit({ getGerencia, idGerencia, setOpenModal }: 
                 .min(5, 'Ingrese al menos 5 caracteres.')
                 .required('La gerencia es obligatorio.'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             await updateGerencia(idGerencia, values);
 
-            /* resetForm(); */
+            resetForm();
             setOpenModal(false);
-            await getGerencia();
+            getGerencia();
         },
     });
     return (

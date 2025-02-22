@@ -1,14 +1,16 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { ReactNode } from 'react';
+import { SizeModal } from '@/types/core'
 
 interface Props {
     children: ReactNode;
     titleModal: string;
     isOpen: boolean;
+    sizeModal?: SizeModal;
     onClose: () => void;
 }
 
-export default function ModalComponents({ children, titleModal, isOpen, onClose }: Props) {
+export default function ModalComponents({ children, titleModal, isOpen, onClose, sizeModal = "max-w-max" }: Props) {
     return (
         <>
             <Dialog
@@ -23,7 +25,7 @@ export default function ModalComponents({ children, titleModal, isOpen, onClose 
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel
                             transition
-                            className="w-full max-w-max rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                            className={`w-full ${sizeModal} rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0`}
                         >
                             <DialogTitle as="h3" className="text-center p-2 text-heading-6 text-gray-700">
                                 {titleModal}

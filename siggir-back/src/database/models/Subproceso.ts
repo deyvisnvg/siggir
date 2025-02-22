@@ -1,5 +1,6 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { Proceso, Cargo } from './index';
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, ForeignKey, BelongsTo, BelongsToMany, HasMany } from 'sequelize-typescript';
+import { Proceso, Cargo, Riesgo } from './index';
+import { ProcesoImpactado } from './ProcesoImpactado';
 
 @Table({
     tableName: 'subproceso',
@@ -45,4 +46,10 @@ export class Subproceso extends Model {
 
     @BelongsTo(() => Cargo)
     cargo!: Cargo;
+
+    @HasMany(() => Riesgo, 'subprocesoId')
+    subProcesoRiesgos!: Riesgo[];
+
+    @BelongsToMany(() => Riesgo, () => ProcesoImpactado, 'procesosImpactados')
+    riesgos!: Riesgo[];
 }

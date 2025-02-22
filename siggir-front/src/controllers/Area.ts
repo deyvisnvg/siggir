@@ -9,8 +9,22 @@ export default function AreaController() {
 
     async function readArea() {
         try {
-            const { ok, data } = await read({ url: "area" });
+            const { ok, data } = await read({ url: "area/raw" });
             console.log(data)
+
+            if (!ok) {
+                return toast.error("No se pudo obtener la data");
+            }
+            setAreas(data);
+        } catch (error) {
+            toast.error("Error al obtener la data");
+        }
+    }
+
+    async function readAreaAll() {
+        try {
+            const { ok, data } = await read({ url: "area" });
+            console.log("areasss", data)
 
             if (!ok) {
                 return toast.error("No se pudo obtener la data");
@@ -52,7 +66,7 @@ export default function AreaController() {
 
     async function updateArea(idArea: number, body: AreaBody) {
         try {
-            const { ok } = await update({ id: idArea, url: "area", body});
+            const { ok } = await update({ id: idArea, url: "area", body });
 
             if (!ok) {
                 toast.error("No es posible actualizar");
@@ -69,6 +83,7 @@ export default function AreaController() {
         areas,
         area,
         readArea,
+        readAreaAll,
         createArea,
         findAreaById,
         updateArea

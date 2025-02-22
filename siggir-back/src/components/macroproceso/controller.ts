@@ -27,8 +27,8 @@ export const findAllMacroproceso = async (req: Request, res: Response): Promise<
 
 export const findByIdMacroproceso = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { params } = req;
-        const macroprocesoId = Number(params.id);
+        const { id } = req.params;
+        const macroprocesoId = Number(id);
         const macroproceso = await findById(macroprocesoId);
 
         if (!macroproceso) {

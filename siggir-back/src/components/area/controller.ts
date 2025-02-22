@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { AreaModule } from "../../database/lib";
 import { success, failure } from "../../responses";
 
-const { create, findAll, findById, update } = AreaModule();
+const { create, findAllRaw, findAll, findById, update } = AreaModule();
 
 export const addArea = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -10,6 +10,16 @@ export const addArea = async (req: Request, res: Response): Promise<void> => {
         const area = await create(body);
 
         success({ res, status: 201, data: area });
+    } catch (error) {
+        failure({ res, status: 500, message: error });
+    }
+}
+
+export const findAllAreaRaw = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const area = await findAllRaw();
+
+        success({ res, status: 200, data: area });
     } catch (error) {
         failure({ res, status: 500, message: error });
     }

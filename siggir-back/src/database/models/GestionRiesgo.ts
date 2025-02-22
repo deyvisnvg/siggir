@@ -1,8 +1,9 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { Empleado } from './index';
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, ForeignKey, BelongsTo, HasMany, BelongsToMany } from 'sequelize-typescript';
+import { Empleado, Periodo } from './index';
+import { Subperiodo } from './Subperiodo';
 
 @Table({
-    tableName: 'gestionRiesgo',
+    tableName: 'gestionriesgo',
     timestamps: false,
 })
 export class GestionRiesgo extends Model {
@@ -41,4 +42,11 @@ export class GestionRiesgo extends Model {
 
     @BelongsTo(() => Empleado)
     empleado!: Empleado;
+
+    @HasMany(() => Subperiodo)
+    subperiodos!: Subperiodo[];
+
+    @BelongsToMany(() => Periodo, () => Subperiodo)
+    periodos!: Periodo[];
+    /* periodos!: Array<Periodo & {Subperiodo: Subperiodo}>; */
 }
