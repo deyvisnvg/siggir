@@ -51,22 +51,22 @@ export default function PlanAccionController() {
         }
     }
 
-    /* async function findAllPlanAccionByIdGestion(idGestion: number) {
+    async function findPlanAccionById(idPlanAccion: string) {
         try {
-            const { ok, data } = await read({ id: idGestion, url: "planaccion/all" });
+            const { ok, data } = await read({ id: idPlanAccion, url: "planaccion" });
             console.log("planAcciones", data)
 
             if (!ok) {
                 toast.error("No se pudo obtener la data");
                 return;
             }
-            setPlanAcciones(data);
+            setPlanAccion(data);
         } catch (error) {
             toast.error("Error al obtener la data");
         }
-    } */
+    }
 
-    /* async function updatePlanAccion(idPlanAccion: number, body: PlanAccionBody) {
+    async function updatePlanAccion(idPlanAccion: string, body: FormData) {
         try {
             const { ok } = await update({ id: idPlanAccion, url: "planaccion", body });
 
@@ -79,15 +79,14 @@ export default function PlanAccionController() {
         } catch (error) {
             toast.error("Error al obtener la data");
         }
-    } */
+    }
 
     return {
         planAcciones,
         planAccion,
         findAllPlanAccionByIdRiesgo,
-        /* findAllPlanAccionByIdGestion, */
         createPlanAccion,
-        /*findRiesgoById,
-        updateRiesgo */
+        findPlanAccionById,
+        updatePlanAccion
     }
 }

@@ -32,29 +32,29 @@ export const ControlModule = () => {
         return count > 0;
     }
 
-    /* async function findById(periodoId: number) {
+    async function findById(controlId: string) {
         return await Control.findOne({
             where: {
-                periodoId
+                controlId
             }
         });
     }
 
-    async function update(periodoId: number, body: ControlBody) {
+    async function update(controlId: string, body: ControlBody) {
         const condicion = {
             where: {
-                periodoId
+                controlId
             }
         };
 
         return await Control.update(body, condicion);
-    } */
+    }
 
     return {
         create,
         findAllByIdRiesgo,
         existsByName,
-        /* findById,
-        update, */
+        findById,
+        update,
     }
 }

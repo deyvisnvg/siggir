@@ -1,18 +1,20 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import { AreaController } from "@/controllers";
+import { AreaController, ControlController } from "@/controllers";
 import ValidatorSchema from "@/validators";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Textarea } from "keep-react";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 import CatalogoController from "@/controllers/Catalogo";
 import { CATALOGO } from "@/core/Catalogo";
 import { TreeSelect } from 'antd';
 import { ButtonComponent } from "@/components";
+import { useSeveridadEmp } from "@/hooks/useSeveridadEmp";
 
 interface Props {
     idControl: string;
-    getControlByIdGestion: (id: number) => void;
+    getControlByIdRiesgo: (id: string) => void;
+    idRiesgo: string;
     setOpenModal: (open: boolean) => void;
 }
 
@@ -23,26 +25,27 @@ interface TreeNode {
     children?: TreeNode[];
 }
 
-export default function ControlesEmpEdit({ idControl, getControlByIdGestion, setOpenModal }: Props) {
-    const storedData = localStorage.getItem("RIESGO_SELECTED");
-
-    const [gestionId, setGestionId] = useState<number>(0);
+export default function ControlesEmpEdit({ getControlByIdRiesgo, idRiesgo, idControl, setOpenModal }: Props) {
     const [areasTreeData, setAreasTreeData] = useState<TreeNode[]>([]);
 
-    /* const { createRiesgo } = RiesgoController(); */
+    const { control, findControlById, updateControl } = ControlController();
+    const { createControl } = ControlController();
     const { areas, readAreaAll } = AreaController();
     const { catalogos, findCatalogoByCodigo } = CatalogoController();
 
+    const {
+        setProbabilidad,
+        setImpacto,
+        severidad
+    } = useSeveridadEmp();
+
     const initialize = () => {
-        if (storedData) {
-            const { gestionId } = JSON.parse(storedData);
-            setGestionId(gestionId);
-        }
         findCatalogoByCodigo([
             CATALOGO.CATALOGO_FRECUENCIA_CONTROL,
             CATALOGO.CATALOGO_OPORTUNIDAD_CONTROL,
             CATALOGO.CATALOGO_AUTOMATIZACION_CONTROL,
         ]);
+        findControlById(idControl);
         readAreaAll();
     }
 
@@ -71,18 +74,19 @@ export default function ControlesEmpEdit({ idControl, getControlByIdGestion, set
 
     const formik = useFormik({
         initialValues: {
-            controlCodigo: '',
-            controlDescripcion: '',
-            controlNombreEvidencia: '',
-            controlSustento: '',
-            controlProbabilidad: undefined,
-            controlImpacto: undefined,
-            controlSeveridad: '',
-            frecuenciaControlId: undefined,
-            oportunidadControlId: undefined,
-            automatizacionControlId: undefined,
-            cargoId: undefined,
+            controlCodigo: control?.controlCodigo || '',
+            controlDescripcion: control?.controlDescripcion || '',
+            controlNombreEvidencia: control?.controlNombreEvidencia || '',
+            controlSustento: [] as File[],
+            controlProbabilidad: control?.controlProbabilidad || "",
+            controlImpacto: control?.controlImpacto || "",
+            controlSeveridad: control?.controlSeveridad || '',
+            frecuenciaControlId: control?.frecuenciaControlId || undefined,
+            oportunidadControlId: control?.oportunidadControlId || undefined,
+            automatizacionControlId: control?.automatizacionControlId || undefined,
+            cargoId: control?.cargoId || undefined,
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({
             controlCodigo: Yup.string()
                 .min(2, 'Ingrese al menos 2 caracteres.')
@@ -107,9 +111,9 @@ export default function ControlesEmpEdit({ idControl, getControlByIdGestion, set
                     }
                     return valid;
                 }),
-            controlProbabilidad: Yup.number()
+            controlProbabilidad: Yup.string()
                 .required('La probabilidad es obligatorio.'),
-            controlImpacto: Yup.number()
+            controlImpacto: Yup.string()
                 .required('El impacto es obligatorio.'),
             controlSeveridad: Yup.string()
                 .required('El Cálculo es obligatorio.'),
@@ -124,15 +128,53 @@ export default function ControlesEmpEdit({ idControl, getControlByIdGestion, set
         }),
         onSubmit: async (values, { resetForm }) => {
             /* console.log("values", values) */
+            const formData = new FormData();
 
-            /* await createRiesgo(bodyRiesgo, nivel); */
-            console.log("values", values)
+            Object.entries(values).forEach(([key, value]) => {
+                if (key === 'controlSustento' && Array.isArray(value)) {
+                    value.forEach(file => {
+                        formData.append(key, file);
+                    });
+                } else {
+                    formData.append(key, String(value));
+                }
+            });
+
+            formData.append("riesgoId", idRiesgo);
+
+            /* for (const [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            } */
+
+            await updateControl(idControl, formData);
 
             resetForm();
             setOpenModal(false);
-            getControlByIdGestion(gestionId);
+            getControlByIdRiesgo(idRiesgo);
         }
     });
+
+    const handleSeveridadChange = (e: ChangeEvent<HTMLSelectElement>, type: string) => {
+        const { value } = e.target;
+        const impacto = formik.values.controlImpacto;
+        const probabilidad = formik.values.controlProbabilidad;
+
+        if (type === "probabilidad") {
+            formik.setFieldValue('controlProbabilidad', value);
+            setProbabilidad(value);
+            setImpacto(impacto);
+        }
+
+        if (type === "impacto") {
+            formik.setFieldValue('controlImpacto', value);
+            setProbabilidad(probabilidad);
+            setImpacto(value);
+        }
+    }
+
+    useEffect(() => {
+        formik.setFieldValue('controlSeveridad', severidad);
+    }, [severidad]);
 
     return (
         <form className="px-2" onSubmit={formik.handleSubmit}>
@@ -146,6 +188,7 @@ export default function ControlesEmpEdit({ idControl, getControlByIdGestion, set
                                 id="controlCodigo"
                                 className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
                                 placeholder="Ingrese código del riesgo"
+                                readOnly
                                 {...formik.getFieldProps('controlCodigo')}
                             />
                             <ValidatorSchema
@@ -175,7 +218,7 @@ export default function ControlesEmpEdit({ idControl, getControlByIdGestion, set
                                 placeholder="Ingrese código del riesgo"
                                 /* {...formik.getFieldProps('controlSustento')} */
                                 onChange={(event) => {
-                                    const files = event.currentTarget.files;
+                                    const files = Array.from(event.currentTarget.files || []);
                                     formik.setFieldValue("controlSustento", files);
                                 }}
                             />
@@ -311,12 +354,13 @@ export default function ControlesEmpEdit({ idControl, getControlByIdGestion, set
                                 id="controlProbabilidad"
                                 className="rounded-lg border border-gray-400 py-1.5 px-3 text-sm"
                                 {...formik.getFieldProps('controlProbabilidad')}
+                                onChange={(e) => handleSeveridadChange(e, "probabilidad")}
                             >
                                 <option value="">Seleccione ( 1 - 4 )</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                                <option value="1.00">1</option>
+                                <option value="2.00">2</option>
+                                <option value="3.00">3</option>
+                                <option value="4.00">4</option>
                             </select>
                             <ValidatorSchema
                                 formik={formik}
@@ -345,12 +389,13 @@ export default function ControlesEmpEdit({ idControl, getControlByIdGestion, set
                                 id="controlImpacto"
                                 className="rounded-lg border border-gray-400 py-1.5 px-3 text-sm"
                                 {...formik.getFieldProps('controlImpacto')}
+                                onChange={(e) => handleSeveridadChange(e, "impacto")}
                             >
                                 <option value="">Seleccione ( 1 - 4 )</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                                <option value="1.00">1</option>
+                                <option value="2.00">2</option>
+                                <option value="3.00">3</option>
+                                <option value="4.00">4</option>
                             </select>
                             <ValidatorSchema
                                 formik={formik}

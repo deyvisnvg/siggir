@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import { AreaController, RiesgoController } from "@/controllers";
+import { AreaController, IndicadorKriController, RiesgoController } from "@/controllers";
 import ValidatorSchema from "@/validators";
 import { useEffect, useState } from "react";
 import { Textarea } from "keep-react";
@@ -11,7 +11,8 @@ import { TreeSelect } from 'antd';
 import { ButtonComponent } from "@/components";
 
 interface Props {
-    getIndicadorKriByIdGestion: (id: number) => void;
+    getIndicadorKriByIdRiesgo: (id: string) => void;
+    idRiesgo: string,
     idIndicadorKri: string;
     setOpenModal: (open: boolean) => void;
 }
@@ -23,26 +24,20 @@ interface TreeNode {
     children?: TreeNode[];
 }
 
-export default function IndicadorKriEmpEdit({ getIndicadorKriByIdGestion, idIndicadorKri, setOpenModal }: Props) {
-    const storedData = localStorage.getItem("RIESGO_SELECTED");
-
-    const [gestionId, setGestionId] = useState<number>(0);
+export default function IndicadorKriEmpEdit({ getIndicadorKriByIdRiesgo, idRiesgo, idIndicadorKri, setOpenModal }: Props) {
     const [procesosTreeData, setProcesosTreeData] = useState<TreeNode[]>([]);
 
-    /* const { createRiesgo } = RiesgoController(); */
+    const { indicadorKri, findIndicadorKriById, updateIndicadorKri } = IndicadorKriController();
     const { areas, readAreaAll } = AreaController();
     const { catalogos, findCatalogoByCodigo } = CatalogoController();
 
     const initialize = () => {
-        if (storedData) {
-            const { gestionId } = JSON.parse(storedData);
-            setGestionId(gestionId);
-        }
         findCatalogoByCodigo([
             CATALOGO.CATALOGO_FRECUENCIA_CONTROL,
             CATALOGO.CATALOGO_OPORTUNIDAD_CONTROL,
             CATALOGO.CATALOGO_AUTOMATIZACION_CONTROL,
         ]);
+        findIndicadorKriById(idIndicadorKri);
         readAreaAll();
     }
 
@@ -71,13 +66,14 @@ export default function IndicadorKriEmpEdit({ getIndicadorKriByIdGestion, idIndi
 
     const formik = useFormik({
         initialValues: {
-            indicadorkriCodigo: '',
-            indicadorkriDescripcion: '',
-            indicadorkriMeta: '',
-            indicadorkriActual: '',
-            frecuenciaControlId: undefined,
-            cargoId: undefined,
+            indicadorkriCodigo: indicadorKri?.indicadorkriCodigo || '',
+            indicadorkriDescripcion: indicadorKri?.indicadorkriDescripcion || '',
+            indicadorkriMeta: indicadorKri?.indicadorkriMeta || '',
+            indicadorkriActual: indicadorKri?.indicadorkriActual || '',
+            frecuenciaControlId: indicadorKri?.frecuenciaControlId || undefined,
+            cargoId: indicadorKri?.cargoId || undefined,
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({
             indicadorkriCodigo: Yup.string()
                 .min(2, 'Ingrese al menos 2 caracteres.')
@@ -97,12 +93,19 @@ export default function IndicadorKriEmpEdit({ getIndicadorKriByIdGestion, idIndi
         }),
         onSubmit: async (values, { resetForm }) => {
             /* console.log("values", values) */
-            /* await createRiesgo(bodyRiesgo, nivel); */
-            console.log("values", values)
+            const body = {
+                ...values,
+                frecuenciaControlId: Number(values.frecuenciaControlId),
+                cargoId: Number(values.cargoId),
+                riesgoId: idRiesgo,
+            }
+            console.log("data indicador", body)
+
+            await updateIndicadorKri(idIndicadorKri, body);
+            getIndicadorKriByIdRiesgo(idRiesgo);
 
             resetForm();
             setOpenModal(false);
-            getIndicadorKriByIdGestion(gestionId);
         }
     });
 
@@ -118,6 +121,7 @@ export default function IndicadorKriEmpEdit({ getIndicadorKriByIdGestion, idIndi
                                 id="indicadorkriCodigo"
                                 className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
                                 placeholder="Ingrese código del riesgo"
+                                readOnly
                                 {...formik.getFieldProps('indicadorkriCodigo')}
                             />
                             <ValidatorSchema
@@ -203,7 +207,7 @@ export default function IndicadorKriEmpEdit({ getIndicadorKriByIdGestion, idIndi
                         />
                     </div>
                     <div className="flex flex-col gap-y-0.5">
-                        <label htmlFor="indicadorkriDescripcion" className="text-sm font-medium">Descripción del Control</label>
+                        <label htmlFor="indicadorkriDescripcion" className="text-sm font-medium">Descripción del Indicador KRI</label>
                         <Textarea placeholder="Descripción del Riesgo."
                             id="indicadorkriDescripcion"
                             className="border-gray-400"
@@ -221,7 +225,7 @@ export default function IndicadorKriEmpEdit({ getIndicadorKriByIdGestion, idIndi
                 <ButtonComponent
                     type="submit"
                     size="sm"
-                    text="Registrar"
+                    text="Editar"
                     color="primary"
                 />
             </div>

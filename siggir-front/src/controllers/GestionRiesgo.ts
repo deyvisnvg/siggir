@@ -21,7 +21,6 @@ export default function GestionRiesgoController() {
     async function readGestionRiesgo() {
         try {
             const { ok, data } = await read({ url: "gestionRiesgo" });
-            console.log("Lista_GestionSistema", data)
 
             if (!ok) {
                 return toast.error("No se pudo obtener la data");

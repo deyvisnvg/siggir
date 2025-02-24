@@ -42,7 +42,7 @@ export default function Login() {
         <div className="flex flex-col items-center justify-center h-screen">
             <div className="absolute top-0 left-0 font-bold p-6 text-2xl flex items-center gap-3">
                 <IconBuildingWarehouse className='size-8' />
-                SIGGIR
+                SIGIR
             </div>
             <div className="rounded-2xl p-12 shadow-2xl bg-white ">
                 <h2 className="text-center mb-7 font-bold text-heading-5">Iniciar Sesión</h2>

@@ -4,7 +4,7 @@ import { success, failure } from "../../responses";
 import { sequelize } from "../../database";
 import { SustentoModule } from "../../database/lib/Sustento";
 
-const { create, findAllByIdRiesgo, existsByName } = PlanAccionModule();
+const { create, findById, findAllByIdRiesgo, existsByName } = PlanAccionModule();
 const { create: createSustento } = SustentoModule();
 
 export const addPlanAccion = async (req: Request, res: Response): Promise<void> => {
@@ -50,6 +50,40 @@ export const addPlanAccion = async (req: Request, res: Response): Promise<void> 
     }
 }
 
+export const findByIdPlanAccion = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const planAccion = await findById(id);
+
+        if (!planAccion) {
+            failure({ res, status: 404, message: 'Recurso no encontrado' });
+            return;
+        }
+
+        success({ res, status: 200, data: planAccion });
+    } catch (error) {
+        failure({ res, status: 500, message: error });
+    }
+}
+
+export const updatePlanAccion = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { params, body } = req;
+        /* const periodoId = Number(params.id);
+        const periodo = await update(periodoId, body); */
+
+        // if (periodo[0] === 0) {
+        //    success({ res, status: 204, data: periodo });
+        //    return;
+        //}
+
+        /* success({ res, status: 200, data: periodo }); */
+    } catch (error) {
+        failure({ res, status: 500, message: error });
+    }
+}
+
+
 export const findAllPlanAccionByIdRiesgo = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id: riesgoId } = req.params;
@@ -86,8 +120,8 @@ export const findByParamsSubPeriodo = async (req: Request, res: Response): Promi
     }
 }
  */
-/*
-export const findAllPeriodo = async (req: Request, res: Response): Promise<void> => {
+
+/* export const findAllPeriodo = async (req: Request, res: Response): Promise<void> => {
     try {
         const periodo = await findAll();
 
@@ -95,39 +129,4 @@ export const findAllPeriodo = async (req: Request, res: Response): Promise<void>
     } catch (error) {
         failure({ res, status: 500, message: error });
     }
-}
-
-export const findByIdPeriodo = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { params } = req;
-        const periodoId = Number(params.id);
-        const periodo = await findById(periodoId);
-
-        if (!periodo) {
-            failure({ res, status: 404, message: 'Recurso no encontrado' });
-            return;
-        }
-
-        success({ res, status: 200, data: periodo });
-    } catch (error) {
-        failure({ res, status: 500, message: error });
-    }
-}
-
-export const updatePeriodo = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { params, body } = req;
-        const periodoId = Number(params.id);
-        const periodo = await update(periodoId, body);
-
-        // if (periodo[0] === 0) {
-        //    success({ res, status: 204, data: periodo });
-        //    return;
-        //}
-
-        success({ res, status: 200, data: periodo });
-    } catch (error) {
-        failure({ res, status: 500, message: error });
-    }
 } */
-

@@ -12,7 +12,13 @@ export const RiesgoModule = () => {
         return await Riesgo.findOne({
             where: {
                 riesgoId
-            }
+            },
+            include: [
+                {
+                    model: Catalogo,
+                    as: 'nivel',
+                },
+            ]
         });
     }
 
@@ -69,6 +75,25 @@ export const RiesgoModule = () => {
         });
     }
 
+    async function existsByName(riesgo_codigo: string) {
+        const count = await Riesgo.count({
+            where: {
+                riesgo_codigo
+            }
+        });
+        return count > 0;
+    }
+
+    async function update(riesgoId: string, body: RiesgoBody) {
+        const condicion = {
+            where: {
+                riesgoId
+            }
+        };
+
+        return await Riesgo.update(body, condicion);
+    }
+
     /* async function findAllByIdGestion(gestionId: number) {
         const riesgos = await Riesgo.findAll({
             include: [
@@ -92,33 +117,11 @@ export const RiesgoModule = () => {
         console.log(riesgos.map(r => r.origen));
     } */
 
-
-
-    async function existsByName(riesgo_codigo: string) {
-        const count = await Riesgo.count({
-            where: {
-                riesgo_codigo
-            }
-        });
-        return count > 0;
-    }
-
-    /*
-    async function update(periodoId: number, body: RiesgoBody) {
-        const condicion = {
-            where: {
-                periodoId
-            }
-        };
-
-        return await Riesgo.update(body, condicion);
-    } */
-
     return {
         create,
         findAllByIdGestion,
         findById,
         existsByName,
-        /*update, */
+        update,
     }
 }

@@ -7,6 +7,7 @@ import ValidatorSchema from "@/validators";
 import { toast } from "keep-react";
 import { isBefore } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
+import moment from "moment";
 
 interface Props {
     getUsuario: () => void;
@@ -30,8 +31,7 @@ export default function UsuarioEdit({ getUsuario, idPersona, setOpenModal }: Pro
             nombres: persona?.nombres || '',
             apellidos: persona?.apellidos || '',
             email: persona?.email || '',
-            fechaNacimiento: persona?.fechaNacimiento ?
-                formatInTimeZone(new Date(persona.fechaNacimiento), 'America/Lima', 'yyyy-MM-dd') : '',
+            fechaNacimiento: moment.utc(persona?.fechaNacimiento).format("YYYY-MM-DD") || '',
             cargoId: persona?.empleado?.cargoId || '',
             estado: persona?.user?.estado || '',
             user: persona?.user?.user || '',
@@ -183,7 +183,7 @@ export default function UsuarioEdit({ getUsuario, idPersona, setOpenModal }: Pro
                             />
                         </div>
                         <div className="flex flex-col gap-y-0.5">
-                            <label htmlFor="fechaNacimiento" className="text-sm font-medium">Fecha Nacimiento</label><span></span>
+                            <label htmlFor="fechaNacimiento" className="text-sm font-medium">Fecha Nacimiento</label>
                             <input type="date"
                                 id="fechaNacimiento"
                                 className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"

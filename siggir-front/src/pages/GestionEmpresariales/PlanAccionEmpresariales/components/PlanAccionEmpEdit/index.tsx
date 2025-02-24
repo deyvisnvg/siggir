@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import { AreaController, RiesgoController } from "@/controllers";
+import { AreaController, PlanAccionController } from "@/controllers";
 import ValidatorSchema from "@/validators";
 import { useEffect, useState } from "react";
 import { Textarea } from "keep-react";
@@ -9,9 +9,11 @@ import CatalogoController from "@/controllers/Catalogo";
 import { CATALOGO } from "@/core/Catalogo";
 import { TreeSelect } from 'antd';
 import { ButtonComponent } from "@/components";
+import moment from "moment";
 
 interface Props {
-    getPlanAccionByIdGestion: (id: number) => void;
+    getPlanAccionByIdRiesgo: (id: string) => void;
+    idRiesgo: string,
     idPlanAccion: string;
     setOpenModal: (open: boolean) => void;
 }
@@ -23,26 +25,20 @@ interface TreeNode {
     children?: TreeNode[];
 }
 
-export default function PlanAccionEmpEdit({ getPlanAccionByIdGestion, idPlanAccion, setOpenModal }: Props) {
-    const storedData = localStorage.getItem("RIESGO_SELECTED");
-
-    const [gestionId, setGestionId] = useState<number>(0);
+export default function PlanAccionEmpEdit({ getPlanAccionByIdRiesgo, idRiesgo, idPlanAccion, setOpenModal }: Props) {
     const [areasTreeData, setAreasTreeData] = useState<TreeNode[]>([]);
 
-    /* const { createRiesgo } = RiesgoController(); */
+    const { planAccion, findPlanAccionById, updatePlanAccion } = PlanAccionController();
     const { areas, readAreaAll } = AreaController();
     const { catalogos, findCatalogoByCodigo } = CatalogoController();
 
     const initialize = () => {
-        if (storedData) {
-            const { gestionId } = JSON.parse(storedData);
-            setGestionId(gestionId);
-        }
         findCatalogoByCodigo([
             CATALOGO.CATALOGO_ESTADO_PLAN,
             CATALOGO.CATALOGO_ESTRATEGIA_RESPUESTA,
         ]);
-        readAreaAll();
+        findPlanAccionById(idPlanAccion),
+            readAreaAll();
     }
 
     useEffectOnce(initialize);
@@ -70,16 +66,17 @@ export default function PlanAccionEmpEdit({ getPlanAccionByIdGestion, idPlanAcci
 
     const formik = useFormik({
         initialValues: {
-            planaccionCodigo: '',
-            planaccionDescripcion: '',
-            planaccionFechaInicio: undefined,
-            planaccionFechaFin: undefined,
-            planaccionNombreEvidencia: '',
-            planaccionSustento: '',
-            estadoPlanId: undefined,
-            estrategiaRespuestaId: undefined,
-            cargoId: undefined,
+            planaccionCodigo: planAccion?.planaccionCodigo || '',
+            planaccionDescripcion: planAccion?.planaccionDescripcion || '',
+            planaccionFechaInicio: moment.utc(planAccion?.planaccionFechaInicio).format("YYYY-MM-DD") || '',
+            planaccionFechaFin: moment.utc(planAccion?.planaccionFechaInicio).format("YYYY-MM-DD") || '',
+            planaccionNombreEvidencia: planAccion?.planaccionNombreEvidencia || '',
+            planaccionSustento: [] as File[],
+            estadoPlanId: planAccion?.estadoPlanId || undefined,
+            estrategiaRespuestaId: planAccion?.estrategiaRespuestaId || undefined,
+            cargoId: planAccion?.cargoId || undefined,
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({
             planaccionCodigo: Yup.string()
                 .min(2, 'Ingrese al menos 2 caracteres.')
@@ -120,12 +117,30 @@ export default function PlanAccionEmpEdit({ getPlanAccionByIdGestion, idPlanAcci
         }),
         onSubmit: async (values, { resetForm }) => {
             /* console.log("values", values) */
-            /* await createRiesgo(bodyRiesgo, nivel); */
-            console.log("values", values)
+
+            const formData = new FormData();
+
+            Object.entries(values).forEach(([key, value]) => {
+                if (key === 'planaccionSustento' && Array.isArray(value)) {
+                    value.forEach(file => {
+                        formData.append(key, file);
+                    });
+                } else {
+                    formData.append(key, String(value));
+                }
+            });
+
+            formData.append("riesgoId", idRiesgo);
+
+            /* for (const [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            } */
+
+            await updatePlanAccion(idPlanAccion, formData);
 
             resetForm();
             setOpenModal(false);
-            getPlanAccionByIdGestion(gestionId);
+            getPlanAccionByIdRiesgo(idRiesgo);
         }
     });
 
@@ -170,7 +185,7 @@ export default function PlanAccionEmpEdit({ getPlanAccionByIdGestion, idPlanAcci
                                 placeholder="Ingrese código del riesgo"
                                 /* {...formik.getFieldProps('planaccionSustento')} */
                                 onChange={(event) => {
-                                    const files = event.currentTarget.files;
+                                    const files = Array.from(event.currentTarget.files || []);
                                     formik.setFieldValue("planaccionSustento", files);
                                 }}
                             />

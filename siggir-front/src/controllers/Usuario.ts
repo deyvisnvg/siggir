@@ -41,6 +41,7 @@ export default function UsuarioController() {
     async function findUsuarioById(idPersona: number) {
         try {
             const { ok, data } = await read({ id: idPersona, url: "user" });
+            console.log("usuario Datos", data)
             
             if (!ok) {
                 toast.error("No se pudo obtener la data");

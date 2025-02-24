@@ -7,10 +7,10 @@ import { validate } from "../../middlewares/validation";
 const IndicadorKriRouter: Router = Router();
 
 /* IndicadorKriRouter.get("/", controller.findAllRiesgo); */
-/* IndicadorKriRouter.get("/:id", controller.findByIdRiesgo); */
+IndicadorKriRouter.get("/:id", controller.findByIdIndicadorKri);
 /* IndicadorKriRouter.get("/all/:id", controller.findByAllIdRiesgo); */
 IndicadorKriRouter.get("/all/:id", controller.findAllIndicadorKriByIdRiesgo);
-/* IndicadorKriRouter.put("/:id", validate(periodoSchema), controller.updatePeriodo);*/
+IndicadorKriRouter.put("/:id", validate(indicadorKriSchema), controller.updateIndicadorKri);
 IndicadorKriRouter.post("/add", validate(indicadorKriSchema), controller.addIndicadorKri);
 
 export default IndicadorKriRouter;

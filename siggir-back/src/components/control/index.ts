@@ -8,7 +8,7 @@ import upload from "../../services/upload";
 const controlRouter: Router = Router();
 
 /* controlRouter.get("/", controller.findAllRiesgo); */
-/* controlRouter.get("/:id", controller.findByIdRiesgo); */
+controlRouter.get("/:id", controller.findByIdControl);
 /* controlRouter.get("/all/:id", controller.findByAllIdRiesgo); */
 controlRouter.get("/all/:id", controller.findAllControlByIdRiesgo);
 /* controlRouter.put("/:id", validate(periodoSchema), controller.updatePeriodo);*/

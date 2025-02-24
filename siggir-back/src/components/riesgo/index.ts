@@ -10,7 +10,8 @@ const riesgoRouter: Router = Router();
 riesgoRouter.get("/:id", controller.findByIdRiesgo);
 /* riesgoRouter.get("/all/:id", controller.findByAllIdRiesgo); */
 riesgoRouter.get("/all/:id", controller.findAllRiesgoByIdGestion);
-/* riesgoRouter.put("/:id", validate(periodoSchema), controller.updatePeriodo);*/
+riesgoRouter.put("/update/:id", validate(riesgoProcesoSchema), controller.updateRiesgo);
+riesgoRouter.put("/update/entidad/:id", validate(riesgoProcesoSchema), controller.updateRiesgo);
 riesgoRouter.post("/add", validate(riesgoProcesoSchema), controller.addRiesgo);
 riesgoRouter.post("/add/entidad", validate(riesgoEntidadSchema), controller.addRiesgo);
 

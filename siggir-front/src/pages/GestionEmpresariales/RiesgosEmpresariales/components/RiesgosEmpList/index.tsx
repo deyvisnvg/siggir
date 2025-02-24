@@ -64,7 +64,7 @@ export default function RiesgosEmpList({ getRiesgoByIdGestion }: Props) {
         {
             label: 'Editar',
             icon: <PencilIcon className="size-4 fill-white/30" />,
-            onclick: () => handleOpenModal('edit', { idRiesgo, getRiesgoByIdGestion }),
+            onclick: () => handleOpenModal('edit', { getRiesgoByIdGestion, idRiesgo }),
         },
     ]
 

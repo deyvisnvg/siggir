@@ -22,6 +22,21 @@ export default function ControlController() {
         }
     }
 
+    async function findControlById(idControl: string) {
+        try {
+            const { ok, data } = await read({ id: idControl, url: "control" });
+            console.log("data", data)
+
+            if (!ok) {
+                toast.error("No se pudo obtener la data");
+                return;
+            }
+            setControl(data);
+        } catch (error) {
+            toast.error("Error al obtener la data");
+        }
+    }
+
     async function findAllControlByIdRiesgo(idRiesgo: string) {
         try {
             const { ok, data } = await read({ id: idRiesgo, url: "control/all" });
@@ -32,6 +47,21 @@ export default function ControlController() {
                 return;
             }
             setControles(data);
+        } catch (error) {
+            toast.error("Error al obtener la data");
+        }
+    }
+
+    async function updateControl(idControl: string, body: FormData) {
+        try {
+            const { ok } = await update({ id: idControl, url: "control", body });
+
+            if (!ok) {
+                toast.error("No es posible actualizar");
+                return;
+            }
+
+            toast.success("Se actualizó correctamente!!!");
         } catch (error) {
             toast.error("Error al obtener la data");
         }
@@ -57,7 +87,7 @@ export default function ControlController() {
         control,
         createControl,
         findAllControlByIdRiesgo,
-        /*findControlById,
-        updateControl */
+        findControlById,
+        updateControl
     }
 }

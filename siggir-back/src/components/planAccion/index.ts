@@ -8,7 +8,7 @@ import upload from "../../services/upload";
 const PlanAccionRouter: Router = Router();
 
 /* PlanAccionRouter.get("/", controller.findAllRiesgo); */
-/* PlanAccionRouter.get("/:id", controller.findByIdRiesgo); */
+PlanAccionRouter.get("/:id", controller.findByIdPlanAccion);
 /* PlanAccionRouter.get("/all/:id", controller.findByAllIdRiesgo); */
 PlanAccionRouter.get("/all/:id", controller.findAllPlanAccionByIdRiesgo);
 /* PlanAccionRouter.put("/:id", validate(periodoSchema), controller.updatePeriodo);*/

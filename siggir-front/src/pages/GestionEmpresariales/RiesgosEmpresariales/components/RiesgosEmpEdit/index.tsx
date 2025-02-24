@@ -1,21 +1,20 @@
-import { FormikErrors, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { ButtonComponent } from "@/components";
 import { GerenciaController, ProcesoController, RiesgoController, SubPeriodoController } from "@/controllers";
 import ValidatorSchema from "@/validators";
-import { Button, message, Steps, theme } from 'antd';
-import { ChangeEvent, Children, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Textarea } from "keep-react";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 import CatalogoController from "@/controllers/Catalogo";
 import { CATALOGO } from "@/core/Catalogo";
 import { TreeSelect } from 'antd';
 import { RiesgoBody } from "@/types/Riesgo";
-import { v4 as uuidv4 } from 'uuid';
-import { FormikProps } from 'formik';
+import { useSeveridadEmp } from "@/hooks/useSeveridadEmp";
 
 interface Props {
     getRiesgoByIdGestion: (id: number) => void;
+    idRiesgo: string,
     setOpenModal: (open: boolean) => void;
 }
 
@@ -26,19 +25,24 @@ interface TreeNode {
     children?: TreeNode[];
 }
 
-export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: Props) {
+export default function RiesgosEmpEdit({ getRiesgoByIdGestion, idRiesgo, setOpenModal }: Props) {
     const storedData = localStorage.getItem("RIESGO_SELECTED");
 
-    const [nivel, setNivel] = useState("");
+    const [nivel, setNivel] = useState<string | undefined>("");
     const [gestionId, setGestionId] = useState<number>(0);
     const [procesosTreeData, setProcesosTreeData] = useState<TreeNode[]>([]);
 
-    const { createRiesgo } = RiesgoController();
+    const { riesgo, findRiesgoById, updateRiesgo } = RiesgoController();
     const { procesos, readProcesoAll } = ProcesoController();
     const { gerencias, readGerencia } = GerenciaController();
     const { catalogos, findCatalogoByCodigo } = CatalogoController();
     const { subperiodos, findSubPeriodoAllByIdGestion } = SubPeriodoController();
 
+    const {
+        setProbabilidad,
+        setImpacto,
+        severidad
+    } = useSeveridadEmp();
 
     const initialize = () => {
         if (storedData) {
@@ -52,19 +56,16 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
             CATALOGO.CATALOGO_FRECUENCIA_RIESGO,
             CATALOGO.CATALOGO_TIPO_RIESGO,
         ]);
+        findRiesgoById(idRiesgo);
         readGerencia();
         readProcesoAll();
     }
 
     useEffectOnce(initialize);
 
-    const handleFrecuenciaChange = async (e: ChangeEvent<HTMLSelectElement>) => {
-        const { value, options } = e.target;
-        const descripcionCorta = options[e.target.selectedIndex].getAttribute('data-descripcion') || "";
-
-        formik.setFieldValue('nivelId', value);
-        setNivel(descripcionCorta);
-    };
+    useEffect(() => {
+        setNivel(riesgo?.nivel?.descripcionCorta);
+    }, [riesgo])
 
     const onChangeTreeSelect = (value: number) => {
         console.log(value)
@@ -89,23 +90,24 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
 
     const formik = useFormik({
         initialValues: {
-            subperiodoId: undefined,
-            riesgoCodigo: '',
-            nivelId: undefined,
-            origenId: undefined,
-            frecuenciaRiesgoId: undefined,
-            tipoRiesgoId: undefined,
-            gerenciaId: undefined,
-            subprocesoId: undefined,
-            riesgoDescripcion: '',
-            riesgoProbabilidad: undefined,
-            riesgoImpacto: undefined,
-            riesgoSeveridad: '',
-            riesgoTitulo: '',
-            listProcesosImpactados: '',
-            listFoda: '',
+            subperiodoId: riesgo?.subperiodoId || undefined,
+            riesgoCodigo: riesgo?.riesgoCodigo || "",
+            nivelId: riesgo?.nivelId || undefined,
+            origenId: riesgo?.origenId || undefined,
+            frecuenciaRiesgoId: riesgo?.frecuenciaRiesgoId || undefined,
+            tipoRiesgoId: riesgo?.tipoRiesgoId || undefined,
+            gerenciaId: riesgo?.gerenciaId || undefined,
+            subprocesoId: riesgo?.subprocesoId || undefined,
+            riesgoDescripcion: riesgo?.riesgoDescripcion || "",
+            riesgoProbabilidad: riesgo?.riesgoProbabilidad || "",
+            riesgoImpacto: riesgo?.riesgoImpacto || "",
+            riesgoSeveridad: riesgo?.riesgoSeveridad || "",
+            riesgoTitulo: riesgo?.riesgoTitulo || "",
+            listProcesosImpactados: "",
+            listFoda: "",
             listGrupoInteres: '',
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({
             subperiodoId: Yup.number()
                 .required('El subperiodo es obligatorio.'),
@@ -134,9 +136,9 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                 .when([], () => {
                     return nivel === 'entidad' ? Yup.string().required('El título es obligatorio.') : Yup.string();
                 }),
-            riesgoProbabilidad: Yup.number()
+            riesgoProbabilidad: Yup.string()
                 .required('La probabilidad es obligatorio.'),
-            riesgoImpacto: Yup.number()
+            riesgoImpacto: Yup.string()
                 .required('El impacto es obligatorio.'),
             riesgoSeveridad: Yup.string()
                 .required('El Cálculo es obligatorio.'),
@@ -177,8 +179,8 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
             let bodyRiesgo: RiesgoBody = {
                 riesgoCodigo,
                 riesgoDescripcion,
-                riesgoProbabilidad: Number(riesgoProbabilidad),
-                riesgoImpacto: Number(riesgoImpacto),
+                riesgoProbabilidad: riesgoProbabilidad,
+                riesgoImpacto: riesgoImpacto,
                 riesgoSeveridad,
                 nivelId: Number(nivelId),
                 origenId: Number(origenId),
@@ -198,15 +200,37 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                 bodyRiesgo.listFoda = listFoda;
                 bodyRiesgo.listGrupoInteres = listGrupoInteres;
             }
-
-            await createRiesgo(bodyRiesgo, nivel);
             console.log("values", bodyRiesgo)
+
+            await updateRiesgo(idRiesgo, bodyRiesgo, nivel);
+            getRiesgoByIdGestion(gestionId);
 
             resetForm();
             setOpenModal(false);
-            getRiesgoByIdGestion(gestionId);
         }
     });
+
+    const handleSeveridadChange = (e: ChangeEvent<HTMLSelectElement>, type: string) => {
+        const { value } = e.target;
+        const impacto = formik.values.riesgoImpacto;
+        const probabilidad = formik.values.riesgoProbabilidad;
+
+        if (type === "probabilidad") {
+            formik.setFieldValue('riesgoProbabilidad', value);
+            setProbabilidad(value);
+            setImpacto(impacto);
+        }
+
+        if (type === "impacto") {
+            formik.setFieldValue('riesgoImpacto', value);
+            setProbabilidad(probabilidad);
+            setImpacto(value);
+        }
+    }
+
+    useEffect(() => {
+        formik.setFieldValue('riesgoSeveridad', severidad);
+    }, [severidad]);
 
     return (
         <form className="px-2" onSubmit={formik.handleSubmit}>
@@ -241,6 +265,7 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                                 id="riesgoCodigo"
                                 className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
                                 placeholder="Ingrese código del riesgo"
+                                readOnly
                                 {...formik.getFieldProps('riesgoCodigo')}
                             />
                             <ValidatorSchema
@@ -253,25 +278,8 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                             <select
                                 id="nivelId"
                                 className="rounded-lg border border-gray-400 py-1.5 px-3 text-sm"
-                                {...formik.getFieldProps('nivelId')}
-                                onChange={handleFrecuenciaChange}
                             >
-                                <option value="">Seleccione</option>
-                                {
-                                    catalogos && catalogos.map((catalogo) => {
-                                        if (catalogo.codigo === CATALOGO.CATALOGO_NIVEL_MATRIZ) {
-                                            return (
-                                                <option
-                                                    key={catalogo.catalogoId}
-                                                    value={catalogo.catalogoId}
-                                                    data-descripcion={catalogo.descripcionCorta}
-                                                >
-                                                    {catalogo.descripcion}
-                                                </option>
-                                            )
-                                        }
-                                    })
-                                }
+                                <option value="">{riesgo?.nivel?.descripcion}</option>
                             </select>
                             <ValidatorSchema
                                 formik={formik}
@@ -444,12 +452,12 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                                     >
                                         <option value="">Seleccione</option>
                                         {/* {
-                                                cargos && cargos.map((cargo) => (
-                                                    <option key={cargo.cargoId} value={cargo.cargoId}>
-                                                        {cargo.cargoNombre}
-                                                    </option>
-                                                ))
-                                            } */}
+                                                            cargos && cargos.map((cargo) => (
+                                                                <option key={cargo.cargoId} value={cargo.cargoId}>
+                                                                    {cargo.cargoNombre}
+                                                                </option>
+                                                            ))
+                                                        } */}
                                     </select>
                                     <ValidatorSchema
                                         formik={formik}
@@ -465,12 +473,12 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                                     >
                                         <option value="">Seleccione</option>
                                         {/* {
-                                                cargos && cargos.map((cargo) => (
-                                                    <option key={cargo.cargoId} value={cargo.cargoId}>
-                                                        {cargo.cargoNombre}
-                                                    </option>
-                                                ))
-                                            } */}
+                                                            cargos && cargos.map((cargo) => (
+                                                                <option key={cargo.cargoId} value={cargo.cargoId}>
+                                                                    {cargo.cargoNombre}
+                                                                </option>
+                                                            ))
+                                                        } */}
                                     </select>
                                     <ValidatorSchema
                                         formik={formik}
@@ -486,12 +494,12 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                                     >
                                         <option value="">Seleccione</option>
                                         {/* {
-                                                cargos && cargos.map((cargo) => (
-                                                    <option key={cargo.cargoId} value={cargo.cargoId}>
-                                                        {cargo.cargoNombre}
-                                                    </option>
-                                                ))
-                                            } */}
+                                                            cargos && cargos.map((cargo) => (
+                                                                <option key={cargo.cargoId} value={cargo.cargoId}>
+                                                                    {cargo.cargoNombre}
+                                                                </option>
+                                                            ))
+                                                        } */}
                                     </select>
                                     <ValidatorSchema
                                         formik={formik}
@@ -514,12 +522,13 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                                 id="riesgoProbabilidad"
                                 className="rounded-lg border border-gray-400 py-1.5 px-3 text-sm"
                                 {...formik.getFieldProps('riesgoProbabilidad')}
+                                onChange={(e) => handleSeveridadChange(e, "probabilidad")}
                             >
                                 <option value="">Seleccione ( 1 - 4 )</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                                <option value="1.00">1</option>
+                                <option value="2.00">2</option>
+                                <option value="3.00">3</option>
+                                <option value="4.00">4</option>
                             </select>
                             <ValidatorSchema
                                 formik={formik}
@@ -532,7 +541,7 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                                 id="riesgoSeveridad"
                                 className="border border-gray-400 rounded-md px-3 py-1.5 text-sm"
                                 placeholder="Cálculo automático"
-                                /* readOnly */
+                                readOnly
                                 {...formik.getFieldProps('riesgoSeveridad')}
                             />
                             <ValidatorSchema
@@ -548,12 +557,13 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                                 id="riesgoImpacto"
                                 className="rounded-lg border border-gray-400 py-1.5 px-3 text-sm"
                                 {...formik.getFieldProps('riesgoImpacto')}
+                                onChange={(e) => handleSeveridadChange(e, "impacto")}
                             >
                                 <option value="">Seleccione ( 1 - 4 )</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                                <option value="1.00">1</option>
+                                <option value="2.00">2</option>
+                                <option value="3.00">3</option>
+                                <option value="4.00">4</option>
                             </select>
                             <ValidatorSchema
                                 formik={formik}
@@ -567,7 +577,7 @@ export default function RiesgosEmpEdit({ getRiesgoByIdGestion, setOpenModal }: P
                 <ButtonComponent
                     type="submit"
                     size="sm"
-                    text="Registrar"
+                    text="Editar"
                     color="primary"
                 />
             </div>

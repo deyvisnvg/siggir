@@ -3,16 +3,13 @@ import * as Yup from 'yup';
 import { ButtonComponent } from "@/components";
 import { GerenciaController, ProcesoController, RiesgoController, SubPeriodoController } from "@/controllers";
 import ValidatorSchema from "@/validators";
-import { Button, message, Steps, theme } from 'antd';
-import { ChangeEvent, Children, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Textarea, toast } from "keep-react";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 import CatalogoController from "@/controllers/Catalogo";
 import { CATALOGO } from "@/core/Catalogo";
 import { TreeSelect } from 'antd';
 import { RiesgoBody } from "@/types/Riesgo";
-import { v4 as uuidv4 } from 'uuid';
-import { FormikProps } from 'formik';
 import { useSeveridadEmp } from "@/hooks/useSeveridadEmp";
 
 interface Props {

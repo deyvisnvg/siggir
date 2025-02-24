@@ -47,7 +47,6 @@ export default function SidebardMenu() {
     const { riesgoSelect, setRiesgoSelect, handleClickRiesgo } = useRiesgoSelect();
 
     useEffect(() => {
-        console.log("holaaaa", gestionRiesgos)
         localStorage.removeItem("RIESGO_SELECTED");
 
         if (gestionRiesgos && gestionRiesgos.length > 0) {

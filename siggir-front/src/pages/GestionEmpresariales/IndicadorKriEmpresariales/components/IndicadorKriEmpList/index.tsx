@@ -1,14 +1,6 @@
 'use client'
 
 import { Plus } from 'phosphor-react'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from 'keep-react';
 import { EllipsisHorizontalCircleIcon, PencilIcon, EyeIcon } from '@heroicons/react/24/outline';
 import {
     ButtonComponent,
@@ -57,7 +49,7 @@ export default function IndicadorKriEmpList({ getIndicadorKriByIdRiesgo, idRiesg
         {
             label: 'Editar',
             icon: <PencilIcon className="size-4 fill-white/30" />,
-            onclick: () => handleOpenModal('edit', { getIndicadorKriByIdRiesgo, idIndicadorKri }),
+            onclick: () => handleOpenModal('edit', { getIndicadorKriByIdRiesgo, idRiesgo, idIndicadorKri }),
         },
     ]
 

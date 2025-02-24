@@ -44,6 +44,7 @@ export default function RiesgoController() {
     async function findRiesgoById(idRiesgo: string) {
         try {
             const { ok, data } = await read({ id: idRiesgo, url: "riesgo" });
+            console.log("data", data)
 
             if (!ok) {
                 toast.error("No se pudo obtener la data");
@@ -71,9 +72,14 @@ export default function RiesgoController() {
         }
     }
 
-    /* async function updateRiesgo(idRiesgo: number, body: RiesgoBody) {
+    async function updateRiesgo(idRiesgo: string, body: RiesgoBody, nivel?: string) {
+        let URL = "";
+
         try {
-            const { ok } = await update({ id: idRiesgo, url: "riesgo", body });
+            if (nivel == 'proceso') URL = "riesgo/update";
+            if (nivel == 'entidad') URL = "riesgo/update/entidad";
+
+            const { ok } = await update({ id: idRiesgo, url: URL, body });
 
             if (!ok) {
                 toast.error("No es posible actualizar");
@@ -84,7 +90,7 @@ export default function RiesgoController() {
         } catch (error) {
             toast.error("Error al obtener la data");
         }
-    } */
+    }
 
     return {
         riesgos,
@@ -92,7 +98,6 @@ export default function RiesgoController() {
         createRiesgo,
         findRiesgoById,
         findAllRiesgoByIdGestion,
-        /*findRiesgoById,
-        updateRiesgo */
+        updateRiesgo
     }
 }

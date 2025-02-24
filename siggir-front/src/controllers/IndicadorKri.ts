@@ -51,22 +51,22 @@ export default function IndicadorKriController() {
         }
     }
 
-    /* async function findAllIndicadorKriByIdGestion(idGestion: number) {
+    async function findIndicadorKriById(idIndicadorKri: string) {
         try {
-            const { ok, data } = await read({ id: idGestion, url: "indicadorkri/all" });
+            const { ok, data } = await read({ id: idIndicadorKri, url: "indicadorkri" });
             console.log("indicadorKris", data)
 
             if (!ok) {
                 toast.error("No se pudo obtener la data");
                 return;
             }
-            setIndicadorKris(data);
+            setIndicadorKri(data);
         } catch (error) {
             toast.error("Error al obtener la data");
         }
-    } */
+    }
 
-    /* async function updateIndicadorKri(idIndicadorKri: number, body: IndicadorKriBody) {
+    async function updateIndicadorKri(idIndicadorKri: string, body: IndicadorKriBody) {
         try {
             const { ok } = await update({ id: idIndicadorKri, url: "indicadorkri", body });
 
@@ -79,14 +79,14 @@ export default function IndicadorKriController() {
         } catch (error) {
             toast.error("Error al obtener la data");
         }
-    } */
+    }
 
     return {
         indicadorKris,
         indicadorKri,
         findAllIndicadorKriByIdRiesgo,
         createIndicadorKri,
-        /*findRiesgoById,
-        updateRiesgo */
+        findIndicadorKriById,
+        updateIndicadorKri,
     }
 }

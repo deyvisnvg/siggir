@@ -4,7 +4,7 @@ import { success, failure } from "../../responses";
 import { sequelize } from "../../database";
 import { SustentoModule } from "../../database/lib/Sustento";
 
-const { create, findAllByIdRiesgo, existsByName } = ControlModule();
+const { create, findById, findAllByIdRiesgo, existsByName } = ControlModule();
 const { create: createSustento } = SustentoModule();
 
 export const addControl = async (req: Request, res: Response): Promise<void> => {
@@ -55,6 +55,61 @@ export const addControl = async (req: Request, res: Response): Promise<void> => 
     }
 }
 
+export const findByIdControl = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const control = await findById(id);
+
+        if (!control) {
+            failure({ res, status: 404, message: 'Recurso no encontrado' });
+            return;
+        }
+
+        success({ res, status: 200, data: control });
+    } catch (error) {
+        failure({ res, status: 500, message: error });
+    }
+}
+
+export const updateControl = async (req: Request, res: Response): Promise<void> => {
+    const transaction = await sequelize.transaction();
+
+    try {
+        const files = req.files as Express.Multer.File[]; // Acceder a los archivos
+        const data = req.body;
+
+        console.log('Archivos:', files);
+        console.log('Datos:', data);
+
+        /* const body = {
+            ...data,
+            controlProbabilidad: data.controlProbabilidad,
+            controlImpacto: data.controlImpacto,
+            frecuenciaControlId: Number(data.frecuenciaControlId),
+            oportunidadControlId: Number(data.oportunidadControlId),
+            automatizacionControlId: Number(data.automatizacionControlId),
+            cargoId: Number(data.cargoId)
+        }
+
+        const control = await create(body, { transaction });
+
+        const bodySustento = files.map(item => ({
+            sustentoNombreOriginal: item.originalname,
+            sustentoNombre: body.controlNombreEvidencia,
+            sustentoPath: `${item.filename}`,
+            controlId: control.controlId
+        }))
+
+        await createSustento(bodySustento, { transaction });
+
+        await transaction.commit();
+
+        success({ res, status: 200, data: control }); */
+    } catch (error) {
+        failure({ res, status: 500, message: error });
+    }
+}
+
 export const findAllControlByIdRiesgo = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id: riesgoId } = req.params;
@@ -101,38 +156,5 @@ export const findAllPeriodo = async (req: Request, res: Response): Promise<void>
         failure({ res, status: 500, message: error });
     }
 }
-
-export const findByIdPeriodo = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { params } = req;
-        const periodoId = Number(params.id);
-        const periodo = await findById(periodoId);
-
-        if (!periodo) {
-            failure({ res, status: 404, message: 'Recurso no encontrado' });
-            return;
-        }
-
-        success({ res, status: 200, data: periodo });
-    } catch (error) {
-        failure({ res, status: 500, message: error });
-    }
-}
-
-export const updatePeriodo = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { params, body } = req;
-        const periodoId = Number(params.id);
-        const periodo = await update(periodoId, body);
-
-        // if (periodo[0] === 0) {
-        //    success({ res, status: 204, data: periodo });
-        //    return;
-        //}
-
-        success({ res, status: 200, data: periodo });
-    } catch (error) {
-        failure({ res, status: 500, message: error });
-    }
-} */
+ */
 

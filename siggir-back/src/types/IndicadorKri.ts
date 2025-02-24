@@ -16,4 +16,5 @@ export interface IndicadorKriBody {
   indicadorkriActual: string;
   frecuenciaControlId: number;
   cargoId: number;
+  riesgoId: string;
 }

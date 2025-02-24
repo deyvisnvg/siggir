@@ -57,7 +57,7 @@ export default function PlanAccionEmpList({ idRiesgo, getPlanAccionByIdRiesgo }:
         {
             label: 'Editar',
             icon: <PencilIcon className="size-4 fill-white/30" />,
-            onclick: () => handleOpenModal('edit', { getPlanAccionByIdRiesgo, idPlanAccion, }),
+            onclick: () => handleOpenModal('edit', { getPlanAccionByIdRiesgo, idRiesgo, idPlanAccion, }),
         },
     ]
 

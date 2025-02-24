@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import { RiesgoModule } from "../../database/lib";
 import { success, failure } from "../../responses";
 
-const { create, findById, findAllByIdGestion, existsByName } = RiesgoModule();
+const { create, findById, update, findAllByIdGestion, existsByName } = RiesgoModule();
 
 export const addRiesgo = async (req: Request, res: Response): Promise<void> => {
     try {
         const data = req.body;
-        console.log(data)
+        /* console.log(data) */
 
         if (await existsByName(data.riesgoCodigo)) {
             failure({ res, status: 409, message: "El código del riesgo ya existe" });
@@ -18,6 +18,21 @@ export const addRiesgo = async (req: Request, res: Response): Promise<void> => {
 
         success({ res, status: 201, data: riesgo });
     } catch (error) {
+        failure({ res, status: 500, message: error });
+    }
+}
+
+export const findAllRiesgoByIdGestion = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const gestionId = Number(id);
+        const riesgos = await findAllByIdGestion(gestionId);
+
+        /* console.log("riesgos", riesgos); */
+
+        success({ res, status: 200, data: riesgos });
+    } catch (error) {
+        console.log(error)
         failure({ res, status: 500, message: error });
     }
 }
@@ -38,17 +53,19 @@ export const findByIdRiesgo = async (req: Request, res: Response): Promise<void>
     }
 }
 
-export const findAllRiesgoByIdGestion = async (req: Request, res: Response): Promise<void> => {
+export const updateRiesgo = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { id } = req.params;
-        const gestionId = Number(id);
-        const riesgos = await findAllByIdGestion(gestionId);
+        const { params, body } = req;
+        const riesgoId = params.id;
+        const riesgo = await update(riesgoId, body);
 
-        /* console.log("riesgos", riesgos); */
+        // if (periodo[0] === 0) {
+        //    success({ res, status: 204, data: periodo });
+        //    return;
+        //}
 
-        success({ res, status: 200, data: riesgos });
+        success({ res, status: 200, data: riesgo });
     } catch (error) {
-        console.log(error)
         failure({ res, status: 500, message: error });
     }
 }
@@ -85,22 +102,6 @@ export const findAllPeriodo = async (req: Request, res: Response): Promise<void>
     } catch (error) {
         failure({ res, status: 500, message: error });
     }
-}
+}*/
 
-export const updatePeriodo = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { params, body } = req;
-        const periodoId = Number(params.id);
-        const periodo = await update(periodoId, body);
-
-        // if (periodo[0] === 0) {
-        //    success({ res, status: 204, data: periodo });
-        //    return;
-        //}
-
-        success({ res, status: 200, data: periodo });
-    } catch (error) {
-        failure({ res, status: 500, message: error });
-    }
-} */
 

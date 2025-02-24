@@ -31,29 +31,29 @@ export const IndicadorKriModule = () => {
         return count > 0;
     }
 
-    /* async function findById(periodoId: number) {
+    async function findById(indicadorkriId: string) {
         return await IndicadorKri.findOne({
             where: {
-                periodoId
+                indicadorkriId
             }
         });
     }
 
-    async function update(periodoId: number, body: IndicadorKriBody) {
+    async function update(indicadorkriId: string, body: IndicadorKriBody) {
         const condicion = {
             where: {
-                periodoId
+                indicadorkriId
             }
         };
 
         return await IndicadorKri.update(body, condicion);
-    } */
+    }
 
     return {
         create,
         findAllByIdRiesgo,
         existsByName,
-        /* findById,
-        update, */
+        findById,
+        update,
     }
 }

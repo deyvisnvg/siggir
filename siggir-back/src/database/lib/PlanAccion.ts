@@ -32,10 +32,10 @@ export const PlanAccionModule = () => {
         return count > 0;
     }
 
-    /* async function findById(periodoId: number) {
+    async function findById(planaccionId: string) {
         return await PlanAccion.findOne({
             where: {
-                periodoId
+                planaccionId
             }
         });
     }
@@ -48,13 +48,13 @@ export const PlanAccionModule = () => {
         };
 
         return await PlanAccion.update(body, condicion);
-    } */
+    }
 
     return {
         create,
         findAllByIdRiesgo,
-        existsByName
-        /* findById,
-        update, */
+        existsByName,
+        findById,
+        update,
     }
 }

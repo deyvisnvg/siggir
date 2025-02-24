@@ -61,7 +61,7 @@ export default function ControlesEmpList({ idRiesgo, getControlByIdRiesgo }: Pro
         {
             label: 'Editar',
             icon: <PencilIcon className="size-4 fill-white/30" />,
-            onclick: () => handleOpenModal('edit', { getControlByIdRiesgo, idControl }),
+            onclick: () => handleOpenModal('edit', { getControlByIdRiesgo, idRiesgo, idControl }),
         },
     ]
 
